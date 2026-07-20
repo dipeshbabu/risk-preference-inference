@@ -29,6 +29,7 @@ from experiments.anytime_familywise_router import (
 )
 from experiments.familywise_policy_baselines import (
     AlphaSpendingFamilywiseRouter,
+    BentkusStitchedFamilywiseRouter,
     fixed_sample_rejections,
 )
 from experiments.frontier_v2_statistical_hash import (
@@ -43,6 +44,7 @@ DEFAULT_METHODS = (
     "fixed_sign_bonferroni",
     "fixed_sign_holm",
     "alpha_spending_racing",
+    "bentkus_stitched_racing",
     "hoeffding_uniform",
     "betting_uniform",
     "betting_resolution",
@@ -57,6 +59,7 @@ METHOD_ASSUMPTIONS = {
     "fixed_sign_bonferroni": "fixed-sample independent sign null",
     "fixed_sign_holm": "fixed-sample independent sign null",
     "alpha_spending_racing": "bounded anytime conditional-mean null",
+    "bentkus_stitched_racing": "bounded IID task streams with anytime stopping",
     "hoeffding_uniform": "bounded anytime conditional-mean null",
     "betting_uniform": "bounded anytime conditional-mean null",
     "betting_resolution": "bounded anytime conditional-mean null",
@@ -244,6 +247,64 @@ def run_alpha_spending_trial(
     )
 
 
+def run_bentkus_stitched_trial(
+    scenario: SyntheticScenario,
+    *,
+    seed: int,
+    familywise_alpha: float,
+    effect_margin: float,
+    maximum_observations_per_task: int,
+    global_observation_budget: int,
+) -> SyntheticTrialResult:
+    means = dict(scenario.task_means)
+    plan = AnytimeFamilywisePlan(
+        task_names=tuple(sorted(means)),
+        familywise_alpha=familywise_alpha,
+        futility_familywise_alpha=familywise_alpha,
+        effect_margin=effect_margin,
+        maximum_observations_per_task=maximum_observations_per_task,
+    )
+    router = BentkusStitchedFamilywiseRouter(plan)
+    task_rngs = {
+        task: random.Random(task_stream_seed(seed, task)) for task in plan.task_names
+    }
+    while router.total_observations() < global_observation_budget:
+        task = router.next_task()
+        if task is None:
+            break
+        observation = bounded_two_point_observation(
+            means[task],
+            lower=plan.observation_lower,
+            upper=plan.observation_upper,
+            rng=task_rngs[task],
+        )
+        router.update(task, observation)
+
+    decisions = router.decisions()
+    accepted = {
+        task
+        for task, evidence in decisions.items()
+        if evidence.decision is RouteDecision.ACCEPT_CANDIDATE
+    }
+    rejected_count = sum(
+        evidence.decision is RouteDecision.REJECT_TO_FALLBACK
+        for evidence in decisions.values()
+    )
+    unresolved_count = sum(
+        evidence.decision
+        in {RouteDecision.UNDECIDED, RouteDecision.BUDGET_EXHAUSTED}
+        for evidence in decisions.values()
+    )
+    return _trial_result(
+        scenario,
+        accepted=accepted,
+        rejected_count=rejected_count,
+        unresolved_count=unresolved_count,
+        total_observations=router.total_observations(),
+        effect_margin=effect_margin,
+    )
+
+
 def run_method_trial(
     scenario: SyntheticScenario,
     *,
@@ -271,6 +332,15 @@ def run_method_trial(
         )
     if method == "alpha_spending_racing":
         return run_alpha_spending_trial(
+            scenario,
+            seed=seed,
+            familywise_alpha=familywise_alpha,
+            effect_margin=effect_margin,
+            maximum_observations_per_task=maximum_observations_per_task,
+            global_observation_budget=global_observation_budget,
+        )
+    if method == "bentkus_stitched_racing":
+        return run_bentkus_stitched_trial(
             scenario,
             seed=seed,
             familywise_alpha=familywise_alpha,

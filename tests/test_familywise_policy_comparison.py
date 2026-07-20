@@ -3,6 +3,7 @@ from __future__ import annotations
 from experiments.anytime_familywise_calibration import SyntheticScenario
 from experiments.familywise_policy_comparison import (
     DEFAULT_METHODS,
+    METHOD_ASSUMPTIONS,
     balanced_fixed_allocation,
     generate_task_streams,
     run_method_trial,
@@ -52,6 +53,9 @@ def test_every_method_respects_the_global_budget() -> None:
         )
         assert result.total_observations <= 24
         assert result.positive_task_count == 1
+
+    assert "bentkus_stitched_racing" in DEFAULT_METHODS
+    assert "IID" in METHOD_ASSUMPTIONS["bentkus_stitched_racing"]
 
 
 def test_paired_summary_is_deterministic_and_reports_contrasts() -> None:

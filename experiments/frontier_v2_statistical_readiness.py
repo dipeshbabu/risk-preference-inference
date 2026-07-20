@@ -26,6 +26,7 @@ from experiments.frontier_v2_proof_certificate import (
 
 PRIMARY_NULL_FILE = "global_null_betting_certified_10000_current.json"
 PREDICTABLE_NULL_FILE = "global_null_predictable_10000_current.json"
+BENTKUS_NULL_FILE = "global_null_bentkus_stitched_10000_current.json"
 METHOD_COMPARISON_FILE = "paired_method_comparison_mixed_300_complete_current.json"
 
 
@@ -139,6 +140,55 @@ def _audit_method_comparison(payload: dict) -> dict:
     }
 
 
+def _audit_bentkus_null(payload: dict) -> dict:
+    summary = payload.get("summary")
+    if not isinstance(summary, dict):
+        raise RuntimeError("Bentkus null summary is missing")
+    if summary.get("scenario") != "global_null":
+        raise RuntimeError("Bentkus null scenario changed")
+    if int(summary.get("trials", -1)) < 10_000:
+        raise RuntimeError("Bentkus null calibration has fewer than 10,000 families")
+    if summary.get("reference_method") != "bentkus_stitched_racing":
+        raise RuntimeError("Bentkus null reference method changed")
+    task_means = summary.get("task_means")
+    if not isinstance(task_means, dict) or not task_means or any(
+        float(mean) != 0.0 for mean in task_means.values()
+    ):
+        raise RuntimeError("Bentkus global-null task family changed")
+    method_summaries = summary.get("method_summaries")
+    if not isinstance(method_summaries, dict) or set(method_summaries) != {
+        "bentkus_stitched_racing"
+    }:
+        raise RuntimeError("Bentkus null method coverage changed")
+    method_summary = method_summaries["bentkus_stitched_racing"]
+    if (
+        method_summary.get("assumption")
+        != METHOD_ASSUMPTIONS["bentkus_stitched_racing"]
+    ):
+        raise RuntimeError("Bentkus null assumption changed")
+    interval = method_summary.get("familywise_false_accept_wilson_95_ci")
+    if (
+        not isinstance(interval, list)
+        or len(interval) != 2
+        or any(not math.isfinite(float(value)) for value in interval)
+        or not 0.0 <= float(interval[0]) <= float(interval[1]) <= 0.05
+    ):
+        raise RuntimeError("Bentkus global-null Wilson interval exceeds 0.05")
+    rate = float(method_summary.get("familywise_false_accept_rate", math.nan))
+    if not math.isfinite(rate) or not 0.0 <= rate <= 0.05:
+        raise RuntimeError("Bentkus global-null false-accept rate exceeds 0.05")
+    return {
+        "method": "bentkus_stitched_racing",
+        "assumption": METHOD_ASSUMPTIONS["bentkus_stitched_racing"],
+        "trials": int(summary["trials"]),
+        "familywise_false_accept_rate": rate,
+        "familywise_false_accept_wilson_95_ci": [
+            float(interval[0]),
+            float(interval[1]),
+        ],
+    }
+
+
 def audit_statistical_readiness(root: Path) -> dict:
     primary = _load_current_payload(
         root / PRIMARY_NULL_FILE,
@@ -147,6 +197,10 @@ def audit_statistical_readiness(root: Path) -> dict:
     predictable = _load_current_payload(
         root / PREDICTABLE_NULL_FILE,
         design="riskshiftbench-v2-anytime-familywise-synthetic-calibration",
+    )
+    bentkus = _load_current_payload(
+        root / BENTKUS_NULL_FILE,
+        design="riskshiftbench-v2-paired-familywise-method-comparison",
     )
     comparison = _load_current_payload(
         root / METHOD_COMPARISON_FILE,
@@ -171,6 +225,7 @@ def audit_statistical_readiness(root: Path) -> dict:
                 ("predictable_betting", "resolution"),
             },
         ),
+        "bentkus_iid_null": _audit_bentkus_null(bentkus),
         "paired_method_comparison": _audit_method_comparison(comparison),
         "nonbinding_resolution_bound": audit_resolution_bound_check(
             resolution_bound

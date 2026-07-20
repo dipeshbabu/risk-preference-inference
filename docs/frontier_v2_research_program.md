@@ -108,9 +108,17 @@ smoothed estimate from observations (1{:}t-1), uses the corresponding
 one-sided Kelly fraction, and clips it below one. The resulting stake is
 predictable and every multiplicative factor remains positive, so the same
 conditional supermartingale argument applies. It is compared under both
-uniform and adaptive resolution allocation. Before v2 is locked, the fixed and
-predictable mixtures should also be compared with a tighter Bentkus
-construction:
+uniform and adaptive resolution allocation.
+
+The comparison suite now also includes an IID-only stitched Bentkus racing
+rule. It computes the Bentkus--Pinelis binomial `P2` bound by enumerating the
+analytic minimizer on every support interval, uses maximal finite-horizon
+boundaries, and stitches horizons with geometric spacing 2 and weights
+`h(k)=(k+1)(k+2)`, whose reciprocal sum is one. Exact dynamic programming
+checks the null crossing probability through horizon 128. This is deliberately
+labeled as an independent-task-stream comparator: the cited construction
+assumes independence and therefore does not support the primary router's
+stronger conditional-mean claim under arbitrary predictable interleaving.
 
 - [Near-Optimal Confidence Sequences for Bounded Random Variables](https://proceedings.mlr.press/v139/kuchibhotla21a.html)
 - [Estimating Means of Bounded Random Variables by Betting](https://arxiv.org/abs/2010.09686)
@@ -118,7 +126,7 @@ construction:
 
 Every synthetic calibration and paired method-comparison artifact is now bound
 to the newline-canonicalized statistical implementation digest
-`9c71d848c92cc2a7b12103fed3881cdc7bd5d02d27b60b0593e4e45b109d4192`.
+`90fa6cc5237d1ee65a6449a2af51fa8cb1f77a66e3dbf9ace39ed00eba0c1fdc`.
 The digest covers the router, calibration generator, valid comparison methods,
 paired comparison runner, and the hash definition itself. The readiness audit
 requires current-digest artifacts for at least 10,000 primary global-null
@@ -276,7 +284,8 @@ candidate/fallback pairs.
 7. anytime mixture e-process with uniform allocation;
 8. anytime mixture e-process with active allocation;
 9. an outcome-blind random-task allocation; and
-10. a robust test-selection baseline inspired by
+10. an IID-only stitched Bentkus racing rule; and
+11. a robust test-selection baseline inspired by
    [RPOSST](https://proceedings.mlr.press/v216/morrill23a.html).
 
 The primary comparisons are familywise-valid methods. Candidate-everywhere and
@@ -545,8 +554,10 @@ calibration suites with exact replay, all 12 learned baseline manifests and
 physical checkpoint schedules, calibration selection, selected-checkpoint
 replay, all six nonlearned reference manifests, and the current-hash statistical
 calibration suite. The current audit passes the complete 6/6 nonlearned gate
-and 2/12 learned gate; the statistical reruns, two sized suites, and ten missing
-learned references remain explicit failures until their audited jobs complete.
+and 4/12 learned gate. The new-digest primary, predictable, Bentkus, paired,
+proof-certificate, and resolution-bound reruns; two sized suites; the router
+lock; and eight missing learned references remain explicit failures until their
+audited jobs complete.
 It continues to state `confirmation_execution_authorized: false` even after
 all readiness checks pass; preregistration remains a separate required action.
 
@@ -566,10 +577,14 @@ all readiness checks pass; preregistration remains a separate required action.
 
 ## Initial development diagnostics
 
-These numbers are implementation diagnostics, not confirmation results. With
+These numbers are implementation diagnostics, not confirmation results. They
+were produced under the immediately preceding statistical digest
+`9c71d848c92cc2a7b12103fed3881cdc7bd5d02d27b60b0593e4e45b109d4192`
+and are retained only as development references; the current Bentkus-inclusive
+digest must pass complete reruns before registration. With
 23 bounded synthetic tasks, familywise alpha 0.05, a maximum of 200
 observations per task, and a shared budget of 1,150 observations, the completed
-current-hash 10,000-family global-null gate produced 52 false-deployment
+pre-Bentkus 10,000-family global-null gate produced 52 false-deployment
 families for primary certified betting: rate 0.0052, Wilson 95% interval
 [0.00397, 0.00681]. In separate 10,000-family runs, the predictable plug-in
 mixture produced 171 false-deployment families under both uniform and
@@ -596,7 +611,7 @@ while the conservative racing baseline supplies a transparent reference.
 
 The frozen planning gaps were deliberately false in the primary null stress
 test, illustrating that allocation misspecification does not alter the alpha
-guarantee. In the current-hash 300 mixed-effect families, certified allocation
+guarantee. In the pre-Bentkus 300 mixed-effect families, certified allocation
 accepted 38.8% of positive tasks and produced mean equal-task improvement
 0.0522. Relative to uniform allocation, the paired acceptance-rate difference
 was 0.2762 [0.2638, 0.2886] and the paired improvement difference was 0.0334
@@ -609,7 +624,7 @@ comparator rather than a data-selected replacement.
 
 The binding-budget power diagnostic does not by itself exercise the
 untruncated sample-complexity statement: at its 200-observation task cap, 22 of
-23 mixed-scenario quotas are clipped. A separate current-hash check therefore
+23 mixed-scenario quotas are clipped. A separate pre-Bentkus check therefore
 used 23 two-point tasks separated from the deployment margin by their exact
 planning gaps, an untruncated maximum task quota of 5,127, and the full summed
 quota budget of 66,810. All 1,000 families respected that deterministic budget.
