@@ -8,6 +8,7 @@ from experiments.frontier_v2_confirmation_runtime import (
     append_pilot_record,
     authenticate_worker_request,
     build_pilot_record,
+    final_route_diagnostics,
     fixed_family_bounded_mean_test,
     load_pilot_records,
     next_pilot_request,
@@ -208,3 +209,19 @@ def test_fixed_family_bounded_test_rejects_out_of_range_differences() -> None:
             differences,
             {tasks[0].name},
         )
+
+
+def test_final_route_diagnostics_report_empirical_precision_and_recall() -> None:
+    tasks = all_tasks("confirmation")
+    effects = {
+        task.name: (0.2 if index % 2 == 0 else -0.1)
+        for index, task in enumerate(tasks)
+    }
+    accepted = {task.name for task in tasks[:4]}
+    result = final_route_diagnostics(effects, accepted)
+    assert result["final_positive_candidate_task_count"] == len(tasks) // 2
+    assert result["final_positive_accepted_task_count"] == 2
+    assert result["final_effect_acceptance_precision"] == 0.5
+    assert result["final_effect_acceptance_recall"] == pytest.approx(
+        2 / (len(tasks) // 2)
+    )

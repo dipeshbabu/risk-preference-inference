@@ -1022,6 +1022,39 @@ def fixed_family_bounded_mean_test(
     }
 
 
+def final_route_diagnostics(
+    candidate_effects: dict[str, float],
+    accepted_tasks: set[str],
+) -> dict:
+    """Describe route selection against the separate final task effects."""
+
+    _domain_task_effects(candidate_effects)
+    expected_tasks = set(candidate_effects)
+    if not accepted_tasks <= expected_tasks:
+        raise RuntimeError("accepted route diagnostics contain unknown tasks")
+    beneficial = {
+        task for task, effect in candidate_effects.items() if float(effect) > 0.0
+    }
+    harmful = {
+        task for task, effect in candidate_effects.items() if float(effect) < 0.0
+    }
+    beneficial_accepted = beneficial & accepted_tasks
+    return {
+        "final_positive_candidate_task_count": len(beneficial),
+        "final_negative_candidate_task_count": len(harmful),
+        "final_positive_accepted_task_count": len(beneficial_accepted),
+        "final_negative_accepted_task_count": len(harmful & accepted_tasks),
+        "final_effect_acceptance_precision": (
+            len(beneficial_accepted) / len(accepted_tasks)
+            if accepted_tasks
+            else None
+        ),
+        "final_effect_acceptance_recall": (
+            len(beneficial_accepted) / len(beneficial) if beneficial else None
+        ),
+    }
+
+
 def _validate_final_task_payload(
     design: dict, payload: dict
 ) -> tuple[float, float, list[float]]:
@@ -1123,6 +1156,10 @@ def analyze_registered_final(protocol_path: Path) -> dict:
             candidate_episode_differences,
             set(decisions["accepted_tasks"]),
             alpha=float(settings["confirmatory_alpha"]),
+        ),
+        "final_route_diagnostics": final_route_diagnostics(
+            candidate_effects,
+            set(decisions["accepted_tasks"]),
         ),
         "accepted_route_count": len(decisions["accepted_tasks"]),
         "harmful_accepted_route_count": len(harmful_accepted),

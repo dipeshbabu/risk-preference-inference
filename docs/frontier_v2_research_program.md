@@ -278,8 +278,11 @@ certified betting allocation.
 The shared primary pilot cap is 3,960 paired observations, or 7,920
 candidate-plus-fallback policy episodes. This exactly matches the v1
 proposal-focused pilot episode budget while covering the larger nine-domain
-family. Every pilot comparator receives the same paired budget and the same
-task-indexed latent episode streams. The readiness audit reconstructs the lock
+family. The 14 routing and testing configurations are compared before
+registration in the frozen 23-task synthetic family, where every method
+receives the same 1,150-observation budget and the same task-indexed latent
+streams. They are not rerun on the confirmation tasks and cannot consume or
+influence confirmation outcomes. The readiness audit reconstructs the lock
 from all 72 input artifacts and requires byte-equivalent content before a v2
 registration can be created; it still never authorizes confirmation execution.
 
@@ -608,8 +611,10 @@ The v2 confirmation should distinguish four claims:
 The primary estimand remains an equal-domain router-minus-fallback effect, but
 the study must also report total pilot cost, acceptance precision and recall
 against separate final outcomes, harmful accepted routes, unresolved routes,
-and per-domain effects. A route-held-fixed score grid and leave-one-domain-out
-analysis are prespecified sensitivity checks.
+and per-domain effects. The bounded primary score is immutable after
+registration; within-domain task resampling, domain resampling, the task
+sign-flip diagnostic, and leave-one-domain-out analysis are prespecified
+sensitivities.
 
 Synthetic comparisons use deterministic task-specific random streams. The
 same trial seed therefore gives every allocation method the same latent stream
