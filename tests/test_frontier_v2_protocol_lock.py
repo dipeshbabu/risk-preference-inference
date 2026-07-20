@@ -7,9 +7,14 @@ import pytest
 
 from experiments.frontier_v2_external_design import canonical_sha256
 from experiments.frontier_v2_protocol_lock import (
+    STATISTICAL_ARTIFACT_FILES,
     byte_sha256,
     finalize_registration,
     validate_protocol,
+)
+from experiments.frontier_v2_statistical_readiness import (
+    BENTKUS_NULL_FILE,
+    CLOSE_COMPARATOR_NULL_FILE,
 )
 
 
@@ -72,3 +77,8 @@ def test_validate_protocol_refuses_unregistered_draft_before_artifact_reads(
 ) -> None:
     with pytest.raises(RuntimeError, match="publicly registered"):
         validate_protocol(_draft(tmp_path), require_registration=True)
+
+
+def test_protocol_lock_binds_close_comparator_calibrations() -> None:
+    assert BENTKUS_NULL_FILE in STATISTICAL_ARTIFACT_FILES
+    assert CLOSE_COMPARATOR_NULL_FILE in STATISTICAL_ARTIFACT_FILES

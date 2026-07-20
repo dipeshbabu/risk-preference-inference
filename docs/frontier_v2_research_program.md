@@ -24,15 +24,23 @@ requirements:
 
 ## Proposed statistical object
 
-For proposal \(i\), let \(X_{i,t}\in[a_i,b_i]\) be the paired
-candidate-minus-fallback score difference from the next pilot unit. Scores and
-bounds are fixed before confirmation. The deployment margin is
-\(\delta_i\geq 0\), and the task-level null is
+For proposal \(i\), let \(\theta_i\) be the candidate-minus-fallback mean
+score difference under the registered confirmation-task distribution, and let
+\(X_{i,t}\in[a_i,b_i]\) be the paired difference from the next pilot unit.
+Scores and bounds are fixed before confirmation. The deployment margin is
+\(\delta_i\geq 0\), and the task-level deployment null is
 
 \[
-H_i:\quad
-\mathbb{E}[X_{i,t}\mid\mathcal{F}_{t-1}]\leq\delta_i.
+H_i:\quad \theta_i\leq\delta_i.
 \]
+
+The registered sampling link is that, whenever \(H_i\) is true, every next
+pilot unit obeys
+\(\mathbb{E}[X_{i,t}\mid\mathcal{F}_{t-1}]\leq\delta_i\). This holds under
+the intended fixed task distribution with fresh, disjoint episode seeds; more
+generally it is the substantive bridge from sequential pilot evidence to the
+deployment target. Stating the link separately avoids treating the complement
+of a time-varying conditional-mean statement as a deployment parameter.
 
 For a fixed betting fraction \(\lambda\geq0\), Hoeffding's lemma gives the
 test supermartingale
@@ -59,7 +67,7 @@ Tasks may be interleaved using any predictable, outcome-adaptive allocation
 rule, and sampling may stop at arbitrary data-dependent times. Then
 
 \[
-\Pr\{\text{at least one proposal with }\mu_i\leq\delta_i
+\Pr\{\text{at least one proposal with }\theta_i\leq\delta_i
 \text{ is deployed}\}
 \leq\sum_i\alpha_i\leq\alpha.
 \]
@@ -76,7 +84,7 @@ the expected score improvement of the deployed router on the fixed task family
 obeys
 
 \[
-\sum_i w_i R_i\mu_i
+\sum_i w_i R_i\theta_i
 >\sum_i w_i R_i\delta_i\geq0,
 \]
 
@@ -294,12 +302,35 @@ Python environments for Gymnasium, OR-Gym, Safety-Gymnasium, and MiniGrid.
 The final stream is blocked until the pilot terminates and its decision file
 exactly matches the authenticated log. It evaluates the frozen candidate and
 fallback on 100 common-random-number episodes per task using seed blocks
-disjoint from the pilot. The deterministic primary analysis reports the
-equal-domain route effect, fixed-domain task bootstrap, domain-resampling
-bootstrap, one-sided task sign-flip test, candidate-everywhere effect, harmful
-accepted routes, per-domain effects, and leave-one-domain-out effects. All
-outcome and analysis files are write-once and checked against frozen hashes on
-resume.
+disjoint from the pilot.
+
+The sole confirmatory test targets the realized, pilot-frozen router on the
+fixed 36-task family. Let \(D_{dij}\in[-1,1]\) be final paired episode
+\(j\) for task \(i\) in domain \(d\), and let \(R_{di}\) be the frozen
+candidate-route indicator. With nine domains, four tasks per domain, and 100
+episodes per task, the registered estimator is
+
+\[
+\widehat\Theta=\sum_{d,i,j}c_{dij}D_{dij},\qquad
+c_{dij}=\frac{R_{di}}{9\cdot4\cdot100}.
+\]
+
+Conditional on the frozen route, the final episode pairs use distinct seeds
+and are assumed independent; their distributions need not be identical. If
+\(S=\sum_{d,i,j}(2c_{dij})^2\), the one-sided weighted Hoeffding p-value for
+\(H_0:\Theta\leq0\) is
+\(\exp\{-2\max(\widehat\Theta,0)^2/S\}\), with p-value one when no
+candidate is deployed. The matching 95% lower confidence bound is
+\(\widehat\Theta-\sqrt{S\log(20)/2}\), truncated only by the feasible lower
+bound from the accepted task weight. Confirmation requires a positive estimate
+and p-value at most 0.05.
+
+The deterministic analysis additionally reports fixed-domain task and
+domain-resampling bootstraps, a symmetry-based task sign-flip sensitivity,
+candidate-everywhere effect, harmful accepted routes, per-domain effects, and
+leave-one-domain-out effects. These are secondary and do not replace the
+bounded confirmatory test. All outcome and analysis files are write-once and
+checked against frozen hashes on resume.
 
 ## Required baselines
 

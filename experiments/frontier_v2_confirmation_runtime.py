@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import os
 import random
 import subprocess
@@ -863,11 +864,16 @@ def primary_analysis_from_task_effects(
     route_effects: dict[str, float],
     candidate_effects: dict[str, float],
     *,
-    bootstrap_replicates: int,
+    task_bootstrap_replicates: int,
+    domain_bootstrap_replicates: int,
     sign_flip_replicates: int,
     seed: int,
 ) -> dict:
-    if bootstrap_replicates <= 0 or sign_flip_replicates <= 0:
+    if (
+        task_bootstrap_replicates <= 0
+        or domain_bootstrap_replicates <= 0
+        or sign_flip_replicates <= 0
+    ):
         raise ValueError("analysis replicate counts must be positive")
     routes = _domain_task_effects(route_effects)
     candidates = _domain_task_effects(candidate_effects)
@@ -876,12 +882,13 @@ def primary_analysis_from_task_effects(
     fixed_bootstrap = []
     domain_bootstrap = []
     domains = tuple(DOMAIN_SPECS)
-    for _replicate in range(bootstrap_replicates):
+    for _replicate in range(task_bootstrap_replicates):
         fixed_draw = {
             domain: [rng.choice(routes[domain]) for _ in routes[domain]]
             for domain in domains
         }
         fixed_bootstrap.append(_equal_domain_mean(fixed_draw))
+    for _replicate in range(domain_bootstrap_replicates):
         sampled_domains = [rng.choice(domains) for _ in domains]
         domain_bootstrap.append(
             fmean(
@@ -912,7 +919,7 @@ def primary_analysis_from_task_effects(
             _quantile(domain_bootstrap, 0.025),
             _quantile(domain_bootstrap, 0.975),
         ],
-        "one_sided_task_sign_flip_p": (exceedances + 1)
+        "secondary_one_sided_task_sign_flip_p": (exceedances + 1)
         / (sign_flip_replicates + 1),
         "per_domain_route_effects": domain_effects,
         "leave_one_domain_out_route_effects": {
@@ -921,13 +928,103 @@ def primary_analysis_from_task_effects(
             )
             for omitted in domains
         },
-        "bootstrap_replicates": bootstrap_replicates,
+        "task_bootstrap_replicates": task_bootstrap_replicates,
+        "domain_bootstrap_replicates": domain_bootstrap_replicates,
         "sign_flip_replicates": sign_flip_replicates,
         "random_seed": seed,
     }
 
 
-def _validate_final_task_payload(design: dict, payload: dict) -> tuple[float, float]:
+def fixed_family_bounded_mean_test(
+    candidate_episode_differences: dict[str, list[float]],
+    accepted_tasks: set[str],
+    *,
+    alpha: float = 0.05,
+) -> dict:
+    """Test the frozen router's fixed-family mean with a Hoeffding bound.
+
+    Conditional on the pilot-frozen route, each accepted task contributes its
+    separately seeded final paired differences in [-1, 1].  Fallback-routed
+    tasks contribute the constant zero.  The weighted Hoeffding inequality is
+    valid for independent, non-identically distributed final episode pairs.
+    """
+
+    if not 0.0 < alpha < 1.0:
+        raise ValueError("alpha must lie in (0, 1)")
+    expected = _confirmation_task_index()
+    if set(candidate_episode_differences) != set(expected):
+        raise RuntimeError("episode differences do not cover the confirmation suite")
+    unknown_accepted = accepted_tasks - set(expected)
+    if unknown_accepted:
+        raise RuntimeError(f"accepted task family contains unknown tasks: {unknown_accepted}")
+
+    domain_count = len(DOMAIN_SPECS)
+    observed = 0.0
+    accepted_task_weight = 0.0
+    weighted_range_square_sum = 0.0
+    accepted_episode_count = 0
+    for domain in DOMAIN_SPECS:
+        tasks = domain_tasks(domain, "confirmation")
+        task_weight = 1.0 / (domain_count * len(tasks))
+        for task in tasks:
+            differences = [
+                float(value) for value in candidate_episode_differences[task.name]
+            ]
+            if not differences:
+                raise RuntimeError(f"final episode differences are empty: {task.name}")
+            if any(not math.isfinite(value) or not -1.0 <= value <= 1.0 for value in differences):
+                raise RuntimeError(
+                    f"final paired score difference lies outside [-1, 1]: {task.name}"
+                )
+            if task.name not in accepted_tasks:
+                continue
+            episode_weight = task_weight / len(differences)
+            observed += task_weight * fmean(differences)
+            accepted_task_weight += task_weight
+            accepted_episode_count += len(differences)
+            weighted_range_square_sum += len(differences) * (
+                2.0 * episode_weight
+            ) ** 2
+
+    if weighted_range_square_sum == 0.0:
+        p_value = 1.0
+        lower_bound = 0.0
+    else:
+        positive_statistic = max(observed, 0.0)
+        p_value = math.exp(
+            -2.0 * positive_statistic * positive_statistic
+            / weighted_range_square_sum
+        )
+        radius = math.sqrt(
+            0.5 * weighted_range_square_sum * math.log(1.0 / alpha)
+        )
+        lower_bound = max(-accepted_task_weight, observed - radius)
+
+    return {
+        "test": "one-sided weighted Hoeffding test",
+        "null": "fixed-family equal-domain deployed-router mean <= 0",
+        "alternative": "fixed-family equal-domain deployed-router mean > 0",
+        "alpha": alpha,
+        "score_difference_bounds": [-1.0, 1.0],
+        "observed_equal_domain_mean_route_effect": observed,
+        "one_sided_p": p_value,
+        "one_sided_lower_confidence_bound": lower_bound,
+        "reject_null": observed > 0.0 and p_value <= alpha,
+        "accepted_task_count": len(accepted_tasks),
+        "accepted_episode_count": accepted_episode_count,
+        "accepted_task_weight": accepted_task_weight,
+        "weighted_range_square_sum": weighted_range_square_sum,
+        "conditioning": "pilot-frozen routes",
+        "assumption": (
+            "independent bounded final paired episode units conditional on the "
+            "pilot-frozen route; identical distributions are not required"
+        ),
+    }
+
+
+def _validate_final_task_payload(
+    design: dict, payload: dict
+) -> tuple[float, float, list[float]]:
     task_name = payload["task"]
     task = _confirmation_task_index()[task_name]
     proposal = _proposal_index(design["router_lock"]["content"])[task_name]
@@ -962,10 +1059,11 @@ def _validate_final_task_payload(design: dict, payload: dict) -> tuple[float, fl
             fallback_row.get("episode", index)
         ) != index:
             raise RuntimeError("final task episode indices changed")
-    candidate_effect = fmean(
+    candidate_differences = [
         float(candidate_row["score"]) - float(fallback_row["score"])
         for candidate_row, fallback_row in zip(candidate, fallback, strict=True)
-    )
+    ]
+    candidate_effect = fmean(candidate_differences)
     route_effect = (
         candidate_effect if payload["pilot_decision"] == "accept_candidate" else 0.0
     )
@@ -976,7 +1074,7 @@ def _validate_final_task_payload(design: dict, payload: dict) -> tuple[float, fl
     )
     if payload["deployed_policy"] != expected_deployed:
         raise RuntimeError("final deployed policy differs from the frozen pilot route")
-    return route_effect, candidate_effect
+    return route_effect, candidate_effect, candidate_differences
 
 
 def analyze_registered_final(protocol_path: Path) -> dict:
@@ -987,6 +1085,7 @@ def analyze_registered_final(protocol_path: Path) -> dict:
     manifest = run_registered_final_manifest_only(design)
     route_effects = {}
     candidate_effects = {}
+    candidate_episode_differences = {}
     harmful_accepted = []
     for record in manifest["task_artifacts"]:
         path = Path(record["path"])
@@ -997,9 +1096,12 @@ def analyze_registered_final(protocol_path: Path) -> dict:
             "decision"
         ]:
             raise RuntimeError("final task route changed after gate freezing")
-        route_effect, candidate_effect = _validate_final_task_payload(design, payload)
+        route_effect, candidate_effect, episode_differences = (
+            _validate_final_task_payload(design, payload)
+        )
         route_effects[payload["task"]] = route_effect
         candidate_effects[payload["task"]] = candidate_effect
+        candidate_episode_differences[payload["task"]] = episode_differences
         if payload["pilot_decision"] == "accept_candidate" and candidate_effect < 0.0:
             harmful_accepted.append(payload["task"])
     settings = design["analysis"]
@@ -1008,11 +1110,19 @@ def analyze_registered_final(protocol_path: Path) -> dict:
         **primary_analysis_from_task_effects(
             route_effects,
             candidate_effects,
-            bootstrap_replicates=int(
+            task_bootstrap_replicates=int(
                 settings["task_stratified_bootstrap_replicates"]
+            ),
+            domain_bootstrap_replicates=int(
+                settings["domain_resampling_bootstrap_replicates"]
             ),
             sign_flip_replicates=int(settings["task_level_sign_flip_replicates"]),
             seed=int(settings["random_seed"]),
+        ),
+        "confirmatory_fixed_family_test": fixed_family_bounded_mean_test(
+            candidate_episode_differences,
+            set(decisions["accepted_tasks"]),
+            alpha=float(settings["confirmatory_alpha"]),
         ),
         "accepted_route_count": len(decisions["accepted_tasks"]),
         "harmful_accepted_route_count": len(harmful_accepted),

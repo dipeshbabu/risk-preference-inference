@@ -22,6 +22,8 @@ from experiments.frontier_v2_external_design import (
 from experiments.frontier_v2_readiness import registration_readiness
 from experiments.frontier_v2_router_lock import audit_router_lock
 from experiments.frontier_v2_statistical_readiness import (
+    BENTKUS_NULL_FILE,
+    CLOSE_COMPARATOR_NULL_FILE,
     METHOD_COMPARISON_FILE,
     PREDICTABLE_NULL_FILE,
     PRIMARY_NULL_FILE,
@@ -37,6 +39,16 @@ LOCKED_PROTOCOL_FILES = (
     "experiments/frontier_v2_proof_certificate.py",
     "experiments/frontier_v2_protocol_lock.py",
     "experiments/frontier_v2_readiness.py",
+)
+
+STATISTICAL_ARTIFACT_FILES = (
+    PRIMARY_NULL_FILE,
+    PREDICTABLE_NULL_FILE,
+    BENTKUS_NULL_FILE,
+    CLOSE_COMPARATOR_NULL_FILE,
+    METHOD_COMPARISON_FILE,
+    RESOLUTION_BOUND_FILE,
+    PROOF_CERTIFICATE_FILE,
 )
 
 
@@ -117,13 +129,7 @@ def build_locked_design(
     router_lock = json.loads(router_lock_path.read_text(encoding="utf-8"))
     statistical_artifacts = [
         _artifact_record(statistical_root / filename)
-        for filename in (
-            PRIMARY_NULL_FILE,
-            PREDICTABLE_NULL_FILE,
-            METHOD_COMPARISON_FILE,
-            RESOLUTION_BOUND_FILE,
-            PROOF_CERTIFICATE_FILE,
-        )
+        for filename in STATISTICAL_ARTIFACT_FILES
     ]
     return {
         "protocol_id": "riskshiftbench-frontier-v2-confirmation-v1",
@@ -199,11 +205,27 @@ def build_locked_design(
                 "effect across the nine fixed external domains."
             ),
             "primary_hypothesis": "one-sided equal-domain mean effect greater than zero",
+            "confirmatory_alpha": 0.05,
+            "confirmatory_test": (
+                "One-sided weighted Hoeffding test of the fixed-family "
+                "equal-domain route effect, using all independently seeded final "
+                "paired episode differences in [-1, 1], conditional on the "
+                "pilot-frozen route. Reject only when the one-sided p-value is "
+                "at most 0.05 and the observed effect is positive."
+            ),
+            "confirmatory_test_assumption": (
+                "Final paired episode units are independent conditional on the "
+                "pilot-frozen route; task distributions may differ."
+            ),
             "task_effect": "mean paired candidate-route score minus fallback score",
             "domain_weighting": "equal domain; equal task within domain",
             "task_stratified_bootstrap_replicates": 10_000,
             "domain_resampling_bootstrap_replicates": 10_000,
             "task_level_sign_flip_replicates": 100_000,
+            "task_level_sign_flip_role": (
+                "secondary symmetry-based sensitivity analysis, not the "
+                "confirmatory test"
+            ),
             "random_seed": 62_000_001,
             "secondary_outputs": [
                 "total paired pilot observations",

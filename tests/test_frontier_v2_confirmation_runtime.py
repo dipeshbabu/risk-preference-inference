@@ -8,6 +8,7 @@ from experiments.frontier_v2_confirmation_runtime import (
     append_pilot_record,
     authenticate_worker_request,
     build_pilot_record,
+    fixed_family_bounded_mean_test,
     load_pilot_records,
     next_pilot_request,
     replay_pilot_records,
@@ -161,10 +162,49 @@ def test_primary_analysis_preserves_equal_domain_weighting() -> None:
     result = primary_analysis_from_task_effects(
         route_effects,
         candidate_effects,
-        bootstrap_replicates=20,
+        task_bootstrap_replicates=20,
+        domain_bootstrap_replicates=30,
         sign_flip_replicates=20,
         seed=7,
     )
     assert result["equal_domain_mean_route_effect"] == pytest.approx(0.1)
     assert result["equal_domain_mean_candidate_everywhere_effect"] == pytest.approx(0.2)
     assert set(result["leave_one_domain_out_route_effects"]) == set(DOMAIN_SPECS)
+    assert result["task_bootstrap_replicates"] == 20
+    assert result["domain_bootstrap_replicates"] == 30
+
+
+def test_fixed_family_bounded_test_uses_final_episode_units() -> None:
+    tasks = all_tasks("confirmation")
+    differences = {task.name: [1.0] * 100 for task in tasks}
+    result = fixed_family_bounded_mean_test(
+        differences,
+        {task.name for task in tasks},
+    )
+    assert result["observed_equal_domain_mean_route_effect"] == pytest.approx(1.0)
+    assert result["accepted_episode_count"] == 3_600
+    assert result["weighted_range_square_sum"] == pytest.approx(4.0 / 3_600)
+    assert result["one_sided_lower_confidence_bound"] > 0.95
+    assert result["reject_null"] is True
+
+
+def test_fixed_family_bounded_test_conditions_on_frozen_fallback_routes() -> None:
+    tasks = all_tasks("confirmation")
+    differences = {task.name: [1.0] * 5 for task in tasks}
+    result = fixed_family_bounded_mean_test(differences, set())
+    assert result["observed_equal_domain_mean_route_effect"] == 0.0
+    assert result["accepted_episode_count"] == 0
+    assert result["one_sided_p"] == 1.0
+    assert result["one_sided_lower_confidence_bound"] == 0.0
+    assert result["reject_null"] is False
+
+
+def test_fixed_family_bounded_test_rejects_out_of_range_differences() -> None:
+    tasks = all_tasks("confirmation")
+    differences = {task.name: [0.0] for task in tasks}
+    differences[tasks[0].name] = [1.01]
+    with pytest.raises(RuntimeError, match="outside"):
+        fixed_family_bounded_mean_test(
+            differences,
+            {tasks[0].name},
+        )
