@@ -378,31 +378,36 @@ leave-one-domain-out effects. These are secondary and do not replace the
 bounded confirmatory test. All outcome and analysis files are write-once and
 checked against frozen hashes on resume.
 
-## Required baselines
+## Required comparisons
 
-Every comparison must receive the same pilot episode budget and the same
-candidate/fallback pairs.
+The frozen synthetic method comparison contains exactly 15 executable
+configurations. Each receives the same 1,150 paired-observation budget and the
+same task-indexed latent streams:
 
-1. fallback only;
-2. candidate everywhere;
-3. fit-only routing;
-4. v1 fixed unanimity with Bonferroni;
-5. fixed-sample Bonferroni mean test;
-6. fixed-sample Holm step-down test;
-7. anytime mixture e-process with uniform allocation;
-8. anytime mixture e-process with active allocation;
-9. an outcome-blind random-task allocation;
-10. an IID-only stitched Bentkus racing rule;
-11. aLTT with aGRAPA betting, anytime Bonferroni, and epsilon-greedy
-    acquisition;
-12. always-valid e-Holm with the same aGRAPA evidence and acquisition; and
-13. N-SCORE with 11-bin expected-log-growth betting, anytime Bonferroni,
-    and epsilon-greedy acquisition; and
-14. a robust test-selection baseline inspired by
-   [RPOSST](https://proceedings.mlr.press/v216/morrill23a.html).
+1. fixed-sample Hoeffding with Bonferroni correction;
+2. fixed-sample Hoeffding with Holm correction;
+3. fixed-sample sign testing with Bonferroni correction;
+4. fixed-sample sign testing with Holm correction;
+5. alpha-spending Hoeffding racing;
+6. IID-only stitched Bentkus racing;
+7. aLTT with aGRAPA betting, anytime Bonferroni, and epsilon-greedy acquisition;
+8. always-valid e-Holm with the same aGRAPA evidence and acquisition;
+9. N-SCORE with 11-bin expected-log-growth betting, anytime Bonferroni, and
+   epsilon-greedy acquisition;
+10. Hoeffding-mixture e-processes with uniform allocation;
+11. betting-mixture e-processes with uniform allocation;
+12. betting-mixture e-processes with the empirical resolution heuristic;
+13. betting-mixture e-processes with certified allocation;
+14. predictable plug-in betting with uniform allocation; and
+15. predictable plug-in betting with the empirical resolution heuristic.
 
-The primary comparisons are familywise-valid methods. Candidate-everywhere and
-fit-only routing remain descriptive upper-recall references.
+The sign procedures use a different independent-sign null and Bentkus uses an
+IID stream assumption; both are labeled rather than treated as equivalent to
+the primary conditional-mean guarantee. Fallback-only, candidate-everywhere,
+fit-only routing, the v1 fixed router, and outcome-blind random allocation are
+separate descriptive route or allocation references. The RPOSST-inspired
+task-subset method is a separate task-composition diagnostic, is not counted
+among the 15 routing/testing configurations, and inherits no RPOSST theorem.
 
 `experiments/familywise_policy_comparison.py` implements paired synthetic
 comparisons for fixed-sample Hoeffding tests with Bonferroni or Holm correction,
