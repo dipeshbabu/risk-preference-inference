@@ -32,6 +32,7 @@ from experiments.familywise_policy_baselines import (
     BentkusStitchedFamilywiseRouter,
     fixed_sample_rejections,
 )
+from experiments.familywise_close_comparators import AgrapaFamilywiseRouter
 from experiments.frontier_v2_statistical_hash import (
     STATISTICAL_IMPLEMENTATION_FILES,
     statistical_implementation_sha256,
@@ -45,6 +46,8 @@ DEFAULT_METHODS = (
     "fixed_sign_holm",
     "alpha_spending_racing",
     "bentkus_stitched_racing",
+    "altt_agrapa_bonferroni",
+    "eholm_agrapa",
     "hoeffding_uniform",
     "betting_uniform",
     "betting_resolution",
@@ -60,6 +63,12 @@ METHOD_ASSUMPTIONS = {
     "fixed_sign_holm": "fixed-sample independent sign null",
     "alpha_spending_racing": "bounded anytime conditional-mean null",
     "bentkus_stitched_racing": "bounded IID task streams with anytime stopping",
+    "altt_agrapa_bonferroni": (
+        "bounded conditional-mean task streams; anytime Bonferroni FWER"
+    ),
+    "eholm_agrapa": (
+        "bounded conditional-mean task streams; always-valid e-Holm strong FWER"
+    ),
     "hoeffding_uniform": "bounded anytime conditional-mean null",
     "betting_uniform": "bounded anytime conditional-mean null",
     "betting_resolution": "bounded anytime conditional-mean null",
@@ -305,6 +314,56 @@ def run_bentkus_stitched_trial(
     )
 
 
+def run_close_comparator_trial(
+    scenario: SyntheticScenario,
+    *,
+    seed: int,
+    selection_rule: str,
+    familywise_alpha: float,
+    effect_margin: float,
+    maximum_observations_per_task: int,
+    global_observation_budget: int,
+) -> SyntheticTrialResult:
+    """Run the budget-matched aLTT or e-Holm aGRAPA comparator."""
+
+    means = dict(scenario.task_means)
+    router = AgrapaFamilywiseRouter(
+        tuple(sorted(means)),
+        familywise_alpha=familywise_alpha,
+        effect_margin=effect_margin,
+        maximum_observations_per_task=maximum_observations_per_task,
+        selection_rule=selection_rule,
+        acquisition_seed=task_stream_seed(seed, f"{selection_rule}:acquisition"),
+    )
+    task_rngs = {
+        task: random.Random(task_stream_seed(seed, task))
+        for task in sorted(means)
+    }
+    while router.total_observations() < global_observation_budget:
+        task = router.next_task()
+        if task is None:
+            break
+        router.update(
+            task,
+            bounded_two_point_observation(
+                means[task],
+                lower=-1.0,
+                upper=1.0,
+                rng=task_rngs[task],
+            ),
+        )
+
+    accepted = set(router.accepted_tasks())
+    return _trial_result(
+        scenario,
+        accepted=accepted,
+        rejected_count=0,
+        unresolved_count=len(means) - len(accepted),
+        total_observations=router.total_observations(),
+        effect_margin=effect_margin,
+    )
+
+
 def run_method_trial(
     scenario: SyntheticScenario,
     *,
@@ -343,6 +402,20 @@ def run_method_trial(
         return run_bentkus_stitched_trial(
             scenario,
             seed=seed,
+            familywise_alpha=familywise_alpha,
+            effect_margin=effect_margin,
+            maximum_observations_per_task=maximum_observations_per_task,
+            global_observation_budget=global_observation_budget,
+        )
+    if method in {"altt_agrapa_bonferroni", "eholm_agrapa"}:
+        return run_close_comparator_trial(
+            scenario,
+            seed=seed,
+            selection_rule=(
+                "altt_bonferroni"
+                if method == "altt_agrapa_bonferroni"
+                else "e_holm"
+            ),
             familywise_alpha=familywise_alpha,
             effect_margin=effect_margin,
             maximum_observations_per_task=maximum_observations_per_task,

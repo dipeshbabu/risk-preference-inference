@@ -56,6 +56,9 @@ def test_every_method_respects_the_global_budget() -> None:
 
     assert "bentkus_stitched_racing" in DEFAULT_METHODS
     assert "IID" in METHOD_ASSUMPTIONS["bentkus_stitched_racing"]
+    assert "altt_agrapa_bonferroni" in DEFAULT_METHODS
+    assert "eholm_agrapa" in DEFAULT_METHODS
+    assert "always-valid" in METHOD_ASSUMPTIONS["eholm_agrapa"]
 
 
 def test_paired_summary_is_deterministic_and_reports_contrasts() -> None:

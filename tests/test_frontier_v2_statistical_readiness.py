@@ -4,6 +4,7 @@ import pytest
 
 from experiments.frontier_v2_statistical_readiness import (
     _audit_bentkus_null,
+    _audit_close_comparator_null,
     _audit_null_payload,
 )
 
@@ -70,3 +71,44 @@ def test_bentkus_null_audit_rejects_weak_monte_carlo_bound() -> None:
     ] = [0.04, 0.06]
     with pytest.raises(RuntimeError, match="exceeds"):
         _audit_bentkus_null(payload)
+
+
+def _close_comparator_payload() -> dict:
+    summaries = {}
+    for method, assumption in {
+        "altt_agrapa_bonferroni": (
+            "bounded conditional-mean task streams; anytime Bonferroni FWER"
+        ),
+        "eholm_agrapa": (
+            "bounded conditional-mean task streams; always-valid e-Holm strong FWER"
+        ),
+    }.items():
+        summaries[method] = {
+            "assumption": assumption,
+            "familywise_false_accept_rate": 0.01,
+            "familywise_false_accept_wilson_95_ci": [0.008, 0.012],
+        }
+    return {
+        "summary": {
+            "scenario": "global_null",
+            "trials": 10_000,
+            "reference_method": "altt_agrapa_bonferroni",
+            "task_means": {"null": 0.0},
+            "method_summaries": summaries,
+        }
+    }
+
+
+def test_close_comparator_null_audit_requires_both_close_methods() -> None:
+    audited = _audit_close_comparator_null(_close_comparator_payload())
+    assert len(audited["methods"]) == 2
+    assert audited["performance_threshold_used"] is False
+
+
+def test_close_comparator_null_audit_rejects_weak_monte_carlo_bound() -> None:
+    payload = _close_comparator_payload()
+    payload["summary"]["method_summaries"]["eholm_agrapa"][
+        "familywise_false_accept_wilson_95_ci"
+    ] = [0.04, 0.06]
+    with pytest.raises(RuntimeError, match="exceeds"):
+        _audit_close_comparator_null(payload)

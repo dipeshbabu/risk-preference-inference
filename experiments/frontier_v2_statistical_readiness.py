@@ -27,6 +27,7 @@ from experiments.frontier_v2_proof_certificate import (
 PRIMARY_NULL_FILE = "global_null_betting_certified_10000_current.json"
 PREDICTABLE_NULL_FILE = "global_null_predictable_10000_current.json"
 BENTKUS_NULL_FILE = "global_null_bentkus_stitched_10000_current.json"
+CLOSE_COMPARATOR_NULL_FILE = "global_null_close_comparators_10000_current.json"
 METHOD_COMPARISON_FILE = "paired_method_comparison_mixed_300_complete_current.json"
 
 
@@ -189,6 +190,63 @@ def _audit_bentkus_null(payload: dict) -> dict:
     }
 
 
+def _audit_close_comparator_null(payload: dict) -> dict:
+    summary = payload.get("summary")
+    if not isinstance(summary, dict):
+        raise RuntimeError("close-comparator null summary is missing")
+    if summary.get("scenario") != "global_null":
+        raise RuntimeError("close-comparator null scenario changed")
+    if int(summary.get("trials", -1)) < 10_000:
+        raise RuntimeError(
+            "close-comparator null calibration has fewer than 10,000 families"
+        )
+    if summary.get("reference_method") != "altt_agrapa_bonferroni":
+        raise RuntimeError("close-comparator null reference method changed")
+    task_means = summary.get("task_means")
+    if not isinstance(task_means, dict) or not task_means or any(
+        float(mean) != 0.0 for mean in task_means.values()
+    ):
+        raise RuntimeError("close-comparator global-null task family changed")
+    expected = {"altt_agrapa_bonferroni", "eholm_agrapa"}
+    method_summaries = summary.get("method_summaries")
+    if not isinstance(method_summaries, dict) or set(method_summaries) != expected:
+        raise RuntimeError("close-comparator null method coverage changed")
+
+    audited = []
+    for method in sorted(expected):
+        method_summary = method_summaries[method]
+        if method_summary.get("assumption") != METHOD_ASSUMPTIONS[method]:
+            raise RuntimeError(f"close-comparator assumption changed: {method}")
+        interval = method_summary.get("familywise_false_accept_wilson_95_ci")
+        if (
+            not isinstance(interval, list)
+            or len(interval) != 2
+            or any(not math.isfinite(float(value)) for value in interval)
+            or not 0.0 <= float(interval[0]) <= float(interval[1]) <= 0.05
+        ):
+            raise RuntimeError(
+                f"close-comparator global-null Wilson interval exceeds 0.05: {method}"
+            )
+        rate = float(method_summary.get("familywise_false_accept_rate", math.nan))
+        if not math.isfinite(rate) or not 0.0 <= rate <= 0.05:
+            raise RuntimeError(
+                f"close-comparator global-null false-accept rate exceeds 0.05: {method}"
+            )
+        audited.append(
+            {
+                "method": method,
+                "assumption": METHOD_ASSUMPTIONS[method],
+                "trials": int(summary["trials"]),
+                "familywise_false_accept_rate": rate,
+                "familywise_false_accept_wilson_95_ci": [
+                    float(interval[0]),
+                    float(interval[1]),
+                ],
+            }
+        )
+    return {"methods": audited, "performance_threshold_used": False}
+
+
 def audit_statistical_readiness(root: Path) -> dict:
     primary = _load_current_payload(
         root / PRIMARY_NULL_FILE,
@@ -200,6 +258,10 @@ def audit_statistical_readiness(root: Path) -> dict:
     )
     bentkus = _load_current_payload(
         root / BENTKUS_NULL_FILE,
+        design="riskshiftbench-v2-paired-familywise-method-comparison",
+    )
+    close_comparators = _load_current_payload(
+        root / CLOSE_COMPARATOR_NULL_FILE,
         design="riskshiftbench-v2-paired-familywise-method-comparison",
     )
     comparison = _load_current_payload(
@@ -226,6 +288,7 @@ def audit_statistical_readiness(root: Path) -> dict:
             },
         ),
         "bentkus_iid_null": _audit_bentkus_null(bentkus),
+        "close_comparator_null": _audit_close_comparator_null(close_comparators),
         "paired_method_comparison": _audit_method_comparison(comparison),
         "nonbinding_resolution_bound": audit_resolution_bound_check(
             resolution_bound

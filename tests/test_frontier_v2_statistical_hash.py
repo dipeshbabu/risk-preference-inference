@@ -12,6 +12,7 @@ def test_statistical_implementation_hash_covers_the_complete_pipeline() -> None:
         "experiments/anytime_familywise_router.py",
         "experiments/anytime_familywise_calibration.py",
         "experiments/familywise_policy_baselines.py",
+        "experiments/familywise_close_comparators.py",
         "experiments/familywise_policy_comparison.py",
     }
     digest = statistical_implementation_sha256()

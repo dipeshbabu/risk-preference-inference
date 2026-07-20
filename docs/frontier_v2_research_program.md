@@ -124,15 +124,46 @@ stronger conditional-mean claim under arbitrary predictable interleaving.
 - [Estimating Means of Bounded Random Variables by Betting](https://arxiv.org/abs/2010.09686)
 - [Familywise Error Rate Control by Interactive Unmasking](https://proceedings.mlr.press/v119/duan20d.html)
 
+### Closest-method boundary
+
+Adaptive Learn-then-Test (aLTT) already established e-process-based adaptive
+acquisition, anytime stopping, and FWER-controlled online policy selection.
+Those ingredients are therefore prior art, not v2 novelty. V2's distinct
+statistical object is a *paired candidate-minus-fallback task effect*, followed
+by deployment of a task-indexed router rather than certification of an
+absolute-risk hyperparameter set. Its additional claims are the
+fallback-relative deployed-router improvement bound and a registered
+gap-dependent resolution-cost certificate. Empirically, v2 asks whether those
+additions help across a heterogeneous, independently maintained nine-domain
+suite under a prospective confirmation split; aLTT used 20 TD3+BC policies in
+one HalfCheetah environment as its policy-selection example.
+
+To make that boundary testable,
+`experiments/familywise_close_comparators.py` implements an aLTT reproduction
+from the published specification, with aGRAPA betting, running-maximum anytime p-values, Bonferroni
+FWER control, and the paper's epsilon-greedy acquisition at epsilon 0.25. The
+bet truncation is frozen at 0.95 and the regularized predictable mean and
+variance estimators are stated in code. It also implements the 2026 e-Holm
+closed-test rule on the same current task e-values. E-Holm has always-valid
+strong FWER control and can strictly dominate inverse-e Bonferroni/Holm
+aggregation; it is a close comparator, not a v2 contribution. The primary v2
+router retains frozen task weights and its deployment-cost certificate because
+the current unweighted e-Holm result does not supply that certificate.
+
+- [Adaptive Learn-then-Test: Statistically Valid and Efficient Hyperparameter Selection](https://proceedings.mlr.press/v267/zecchin25a.html)
+- [Family-wise Error Rate Control with E-values](https://arxiv.org/abs/2501.09015)
+
 Every synthetic calibration and paired method-comparison artifact is now bound
 to the newline-canonicalized statistical implementation digest
-`90fa6cc5237d1ee65a6449a2af51fa8cb1f77a66e3dbf9ace39ed00eba0c1fdc`.
+`111e48efaea4f71031d52ced679b84ec832c03dc0519cc2be0c8d5d459fbe6fb`.
 The digest covers the router, calibration generator, valid comparison methods,
 paired comparison runner, and the hash definition itself. The readiness audit
 requires current-digest artifacts for at least 10,000 primary global-null
 families, 10,000 predictable-comparator global-null families under both
 allocations, and a 300-trial comparison covering every declared method. Null
-calibration is considered adequate only when the Wilson 95% upper bound remains
+calibration additionally requires 10,000 matched global-null families for the
+aLTT and e-Holm close comparators. Null calibration is considered adequate only
+when the Wilson 95% upper bound remains
 at or below 0.05. No observed power or utility threshold is used to select a
 winner.
 
@@ -283,9 +314,12 @@ candidate/fallback pairs.
 6. fixed-sample Holm step-down test;
 7. anytime mixture e-process with uniform allocation;
 8. anytime mixture e-process with active allocation;
-9. an outcome-blind random-task allocation; and
-10. an IID-only stitched Bentkus racing rule; and
-11. a robust test-selection baseline inspired by
+9. an outcome-blind random-task allocation;
+10. an IID-only stitched Bentkus racing rule;
+11. aLTT with aGRAPA betting, anytime Bonferroni, and epsilon-greedy
+    acquisition;
+12. always-valid e-Holm with the same aGRAPA evidence and acquisition; and
+13. a robust test-selection baseline inspired by
    [RPOSST](https://proceedings.mlr.press/v216/morrill23a.html).
 
 The primary comparisons are familywise-valid methods. Candidate-everywhere and
@@ -297,6 +331,15 @@ fixed-sample sign tests with Bonferroni or Holm correction, the alpha-spending
 racing rule, the Hoeffding-mixture router, and the betting-mixture router. The
 sign methods test an independent sign null rather than the conditional-mean
 null and are labeled separately; they are not interchangeable guarantees.
+The comparison now includes 14 statistical routing/testing configurations in
+total because allocation variants are counted separately. A first 100-family
+development smoke comparison found 4/100 global-null families with any false
+acceptance for both aLTT and e-Holm; its Wilson upper bound is too wide for the
+readiness gate. In a separate 100-family mixed-effect smoke comparison, the
+certified v2 router accepted 39.0% of positive tasks versus 20.4% for aLTT at
+the same 1,150-observation budget, with no versus one false-accept family.
+These small diagnostics justify retaining the comparison but are not method
+selection evidence; the registered method cannot be chosen from them.
 
 The learned-policy reference protocol is now machine-readable in
 `experiments/frontier_v2_baseline_design.py`. Every learned baseline uses five
@@ -555,9 +598,12 @@ physical checkpoint schedules, calibration selection, selected-checkpoint
 replay, all six nonlearned reference manifests, and the current-hash statistical
 calibration suite. The current audit passes the complete 6/6 nonlearned gate
 and 4/12 learned gate. The new-digest primary, predictable, Bentkus, paired,
-proof-certificate, and resolution-bound reruns; two sized suites; the router
-lock; and eight missing learned references remain explicit failures until their
-audited jobs complete.
+close-comparator, proof-certificate, and resolution-bound reruns; the
+calibration-sized suite; the router lock; and eight missing learned references
+remain explicit failures until their audited jobs complete. The development
+20-episode suite completed all 36 tasks and 2,160 episode rows under the current
+outcome hash, and its strict audit passed the task-coverage, episode-count,
+canonical-seed, common-random-number, replay, and score-bound checks.
 It continues to state `confirmation_execution_authorized: false` even after
 all readiness checks pass; preregistration remains a separate required action.
 

@@ -11,6 +11,7 @@ STATISTICAL_IMPLEMENTATION_FILES = (
     "experiments/anytime_familywise_router.py",
     "experiments/anytime_familywise_calibration.py",
     "experiments/familywise_policy_baselines.py",
+    "experiments/familywise_close_comparators.py",
     "experiments/familywise_policy_comparison.py",
 )
 
