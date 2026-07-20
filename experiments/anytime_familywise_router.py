@@ -533,7 +533,12 @@ class AnytimeFamilywiseRouter:
                     key=lambda task: (
                         self._certified_sample_targets[task].scheduled_observations
                         - len(self._observations[task]),
-                        self._certified_sample_targets[task].scheduled_observations,
+                        # Preserve the calibration-derived difficulty ordering even
+                        # when several theoretical targets are clipped to the same
+                        # per-task cap.  Without this tie-break, a binding cap makes
+                        # the certified scheduler silently fall back to task-name
+                        # order and discards the planning gaps entirely.
+                        self._certified_sample_targets[task].required_observations,
                         task,
                     ),
                 )

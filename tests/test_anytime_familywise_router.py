@@ -195,6 +195,29 @@ def test_certified_allocation_completes_shortest_frozen_quota_first() -> None:
     assert not targets["easy"].clipped_by_task_cap
 
 
+def test_certified_allocation_preserves_gap_order_when_targets_are_capped() -> None:
+    plan = AnytimeFamilywisePlan(
+        task_names=("a_hard", "z_easy"),
+        planning_effect_gaps=(("a_hard", 0.05), ("z_easy", 0.5)),
+        maximum_observations_per_task=20,
+    )
+    router = AnytimeFamilywiseRouter(plan)
+    router.update("a_hard", 0.0)
+    router.update("z_easy", 0.0)
+
+    targets = {target.task: target for target in router.certified_sample_targets()}
+    assert targets["a_hard"].clipped_by_task_cap
+    assert targets["z_easy"].clipped_by_task_cap
+    assert (
+        targets["z_easy"].required_observations
+        < targets["a_hard"].required_observations
+    )
+    assert (
+        router.next_task(strategy="certified", forced_initial_observations=1)
+        == "z_easy"
+    )
+
+
 def test_certified_allocation_requires_planning_gaps() -> None:
     router = AnytimeFamilywiseRouter(AnytimeFamilywisePlan(task_names=("task",)))
     with pytest.raises(RuntimeError, match="planning effect gaps"):

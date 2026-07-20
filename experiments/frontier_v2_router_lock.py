@@ -12,7 +12,10 @@ import json
 from pathlib import Path
 from statistics import fmean
 
-from experiments.anytime_familywise_router import AnytimeFamilywisePlan
+from experiments.anytime_familywise_router import (
+    AnytimeFamilywisePlan,
+    AnytimeFamilywiseRouter,
+)
 from experiments.frontier_v2_external_design import (
     DOMAIN_SPECS,
     all_tasks,
@@ -198,6 +201,18 @@ def build_router_lock(
         planning_effect_gaps=planning_effect_gaps,
         resolution_familywise_beta=RESOLUTION_FAMILYWISE_BETA,
     )
+    certified_targets = {
+        target.task: target
+        for target in AnytimeFamilywiseRouter(plan).certified_sample_targets()
+    }
+    for proposal in proposals:
+        target = certified_targets[proposal["task"]]
+        proposal["certified_resolution_target"] = {
+            "required_observations": target.required_observations,
+            "scheduled_observations": target.scheduled_observations,
+            "betting_fraction": target.betting_fraction,
+            "clipped_by_task_cap": target.clipped_by_task_cap,
+        }
 
     payload = {
         "protocol_id": "riskshiftbench-frontier-v2-router-lock-v1",
@@ -259,6 +274,24 @@ def build_router_lock(
             "e_process_method": plan.e_process_method,
             "betting_fraction_grid": list(plan.betting_fraction_grid),
             "allocation": "certified",
+            "allocation_priority": (
+                "smallest remaining scheduled quota, then smallest theoretical "
+                "required-observation target, then task name"
+            ),
+            "certified_target_summary": {
+                "required_observations_total": sum(
+                    target.required_observations
+                    for target in certified_targets.values()
+                ),
+                "scheduled_observations_total": sum(
+                    target.scheduled_observations
+                    for target in certified_targets.values()
+                ),
+                "clipped_task_count": sum(
+                    target.clipped_by_task_cap
+                    for target in certified_targets.values()
+                ),
+            },
             "resolution_familywise_beta": plan.resolution_familywise_beta,
             "multiplicity": "prespecified weighted Bonferroni e-value thresholds",
             "common_random_numbers": True,
@@ -317,6 +350,9 @@ def audit_router_lock(
         "paired_observation_budget": payload["cost_accounting"][
             "paired_observation_budget"
         ],
+        "clipped_target_count": payload["anytime_plan"][
+            "certified_target_summary"
+        ]["clipped_task_count"],
         "confirmation_task_manifest_sha256": payload[
             "confirmation_task_manifest_sha256"
         ],

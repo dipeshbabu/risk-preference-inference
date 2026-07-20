@@ -181,7 +181,7 @@ task family; this lift is a comparator, not a claim made by the N-SCORE paper.
 
 Every synthetic calibration and paired method-comparison artifact is now bound
 to the newline-canonicalized statistical implementation digest
-`d7d078b95fb27d268719c3fccc2e8c314403d91ff25e448c378556366881fa27`.
+`4deb1d46e9fad3833a361857e1e2031a417d5dee4651cc511ebc1a7476083877`.
 The digest covers the router, calibration generator, valid comparison methods,
 paired comparison runner, and the hash definition itself. The readiness audit
 requires current-digest artifacts for at least 10,000 primary global-null
@@ -296,13 +296,22 @@ certified betting allocation.
 The shared primary pilot cap is 3,960 paired observations, or 7,920
 candidate-plus-fallback policy episodes. This exactly matches the v1
 proposal-focused pilot episode budget while covering the larger nine-domain
-family. The 14 routing and testing configurations are compared before
+family. The 15 routing and testing configurations are compared before
 registration in the frozen 23-task synthetic family, where every method
 receives the same 1,150-observation budget and the same task-indexed latent
 streams. They are not rerun on the confirmation tasks and cannot consume or
 influence confirmation outcomes. The readiness audit reconstructs the lock
 from all 72 input artifacts and requires byte-equivalent content before a v2
 registration can be created; it still never authorizes confirmation execution.
+
+The lock records the theoretical and cap-limited resolution target for every
+proposal. All 36 theoretical targets exceed the 200-pair per-task cap in the
+current calibration lock, so the registered family-level resolution guarantee
+is explicitly nonbinding for the external pilot. The cap cannot affect FWER;
+it only permits unresolved tasks. When targets share the same capped quota,
+the scheduler preserves the calibration-derived theoretical difficulty order
+before using task name as the final deterministic tie-break. This avoids a
+silent alphabetical allocation when the global budget is binding.
 
 `experiments/frontier_v2_protocol_lock.py` then refuses to create a registration
 draft until the source, statistical, rehearsal, router, 12 learned-baseline, and
@@ -446,8 +455,8 @@ calibration scores ranged from 0.3770 to 0.7876 across seeds, with selected
 steps from 300,000 to 450,000. Taxi scores ranged from 0.9611 to 0.9615, with
 selected steps from 200,000 to 500,000. All five seeds will be reported; the
 best seed is not substituted for the prespecified replicate distribution.
-Deep OR-Gym and MiniGrid references and both five-seed Safety-Gymnasium
-PPO-Lagrangian/CPO references remain incomplete gates.
+The deep OR-Gym references are complete. MiniGrid and both five-seed
+Safety-Gymnasium PPO-Lagrangian/CPO references remain incomplete gates.
 
 The six nonlearned references are now executable rather than design-table
 labels. `experiments/frontier_v2_nonlearned_baselines.py`, bound to digest
@@ -611,8 +620,9 @@ effects.
 Taxi candidates disagree with fallback on 8--9% of tabular states, but a
 20-episode paired diagnostic found only rare trajectory changes and effects
 near zero. Taxi is retained as a difficult/null-routing domain; its weakness is
-not hidden by tuning an artificial score effect. Proposal freezing may exclude
-zero-contrast task-policy pairs using development and calibration data only.
+not hidden by tuning an artificial score effect. All four confirmation
+proposals per domain remain in the family even when the development or
+calibration contrast is zero.
 
 The current machine has six CPU cores, 15.8 GB RAM, and a 4 GB GTX 1650, so
 scripted-policy development can run locally, but training or evaluating the
@@ -656,14 +666,14 @@ single machine-readable audit. It verifies all seven clean source locks, both
 calibration suites with exact replay, all 12 learned baseline manifests and
 physical checkpoint schedules, calibration selection, selected-checkpoint
 replay, all six nonlearned reference manifests, and the current-hash statistical
-calibration suite. The current audit passes the complete 6/6 nonlearned gate
-and 4/12 learned gate. The new-digest primary, predictable, Bentkus, paired,
-close-comparator, proof-certificate, and resolution-bound reruns; the
-calibration-sized suite; the router lock; and eight missing learned references
-remain explicit failures until their audited jobs complete. The development
-20-episode suite completed all 36 tasks and 2,160 episode rows under the current
-outcome hash, and its strict audit passed the task-coverage, episode-count,
-canonical-seed, common-random-number, replay, and score-bound checks.
+calibration suite. The current audit passes the complete 6/6 nonlearned gate,
+4/12 learned gate, both sized 36-task rehearsal gates, and the deterministic
+outcome-free router lock. The new-digest primary, predictable, Bentkus, paired,
+close-comparator, proof-certificate, and resolution-bound reruns and eight
+missing learned references remain explicit failures until their audited jobs
+complete. Each 20-episode suite contains 36 tasks and 2,160 episode rows under
+the current outcome hash and passes task coverage, episode count, canonical
+seed, common-random-number, replay, and score-bound checks.
 It continues to state `confirmation_execution_authorized: false` even after
 all readiness checks pass; preregistration remains a separate required action.
 
