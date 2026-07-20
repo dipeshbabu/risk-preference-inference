@@ -55,9 +55,9 @@ E_{i,n}(\lambda)=
 
 V2 mixes a prespecified finite grid of betting fractions. A convex mixture of
 nonnegative test supermartingales remains a test supermartingale. Proposal
-\(i\) is deployed when its mixture e-process reaches \(1/\alpha_i\), where the
-task weights are frozen from development evidence and satisfy
-\(\sum_i\alpha_i\leq\alpha\).
+\(i\) is deployed when its mixture e-process reaches \(1/\alpha_i\). The
+multiplicity weights are fixed before confirmation (and are equal in the
+external design), with \(\sum_i\alpha_i\leq\alpha\).
 
 ## Primary theorem target
 
@@ -156,6 +156,19 @@ RiskShiftBench v2 instead targets simultaneous task-indexed deployment under
 outcome-adaptive allocation, a conditional-mean validity model, and a frozen
 family-level resolution-cost certificate.
 
+The broader adaptive-testing ingredients are also established prior art. The
+bandit multiple-testing framework of Xu, Wang, and Ramdas already decouples
+e-process evidence from arbitrary exploration and stopping, including
+dependent arms, while targeting FDR rather than taskwise FWER. PEAK already
+develops nonparametric multi-stream betting that avoids a union bound for a
+global composite-mean or best-arm test; it does not return an individually
+FWER-certified deployment set. Brannath and Fischer further show that
+anytime-valid e-value tests and classical confirmatory adaptive designs admit
+formal translations. V2 therefore does not claim adaptive sampling,
+multi-stream betting, or flexible interim design as new. Its contribution is
+the particular deployment object, certificate, and prospective heterogeneous
+evaluation described above.
+
 To make that boundary testable,
 `experiments/familywise_close_comparators.py` implements an aLTT reproduction
 from the published specification, with aGRAPA betting, running-maximum anytime p-values, Bonferroni
@@ -178,6 +191,9 @@ task family; this lift is a comparator, not a claim made by the N-SCORE paper.
 - [Family-wise Error Rate Control with E-values](https://arxiv.org/abs/2501.09015)
 - [CSPI-MT: Calibrated Safe Policy Improvement with Multiple Testing for Threshold Policies](https://arxiv.org/abs/2408.12004)
 - [Beyond Binary Success: Sample-Efficient and Statistically Rigorous Robot Policy Comparison](https://arxiv.org/abs/2603.13616)
+- [A Unified Framework for Bandit Multiple Testing](https://arxiv.org/abs/2107.07322)
+- [Peeking with PEAK: Sequential, Nonparametric Composite Hypothesis Tests for Means of Multiple Data Streams](https://proceedings.mlr.press/v235/cho24a.html)
+- [Anytime-Valid Testing with E-values and Confirmatory Adaptive Designs](https://arxiv.org/abs/2606.00878)
 
 Every synthetic calibration and paired method-comparison artifact is now bound
 to the newline-canonicalized statistical implementation digest
