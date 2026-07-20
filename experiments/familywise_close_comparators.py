@@ -5,8 +5,10 @@ aGRAPA e-process for every proposal, anytime p-values obtained from running
 e-process maxima, Bonferroni FWER control, and epsilon-greedy acquisition.
 The e-Holm comparator keeps the same task e-processes and acquisition policy
 but applies the always-valid e-Holm closed test of Hartog and Lei (2026) to
-the current e-values.  Both are development-only and consume no confirmation
-artifact.
+the current e-values.  The N-SCORE comparator follows Snyder et al. (2026):
+an outer-marginal histogram chooses a predictable expected-log-growth stake,
+while the exact bounded paired difference updates the e-process.  All are
+development-only and consume no confirmation artifact.
 """
 
 from __future__ import annotations
@@ -18,6 +20,8 @@ from math import exp, isfinite, log, log1p
 
 ALTT_EPSILON = 0.25
 AGRAPA_TRUNCATION = 0.95
+NSCORE_BINS = 11
+NSCORE_NUMERICAL_TRUNCATION = 1.0 - 1e-12
 
 
 def altt_bonferroni_rejections(
@@ -244,3 +248,202 @@ class AgrapaFamilywiseRouter:
     def total_observations(self) -> int:
         return sum(len(values) for values in self._observations.values())
 
+
+def nscore_kde_fraction(
+    fallback_bin_counts: tuple[int, ...],
+    candidate_bin_counts: tuple[int, ...],
+    *,
+    effect_margin: float = 0.0,
+    truncation: float = NSCORE_NUMERICAL_TRUNCATION,
+) -> float:
+    """Return the predictable N-SCORE expected-log-growth fraction.
+
+    This is the uniform-binning, outer-marginal KDE construction in Snyder
+    et al. (2026).  For margin zero, maximizing the empirical expected log
+    factor is algebraically identical to the paper's signal/hysteresis
+    decomposition.  The direct form also supports a nonzero deployment margin.
+    """
+
+    if len(fallback_bin_counts) != len(candidate_bin_counts):
+        raise ValueError("N-SCORE histograms must use the same bin count")
+    if len(fallback_bin_counts) < 2:
+        raise ValueError("N-SCORE requires at least two bins")
+    if any(count < 0 for count in (*fallback_bin_counts, *candidate_bin_counts)):
+        raise ValueError("N-SCORE histogram counts cannot be negative")
+    if not -1.0 < effect_margin < 1.0:
+        raise ValueError("effect_margin must lie in (-1, 1)")
+    if not 0.0 < truncation < 1.0:
+        raise ValueError("truncation must lie in (0, 1)")
+    fallback_total = sum(fallback_bin_counts)
+    candidate_total = sum(candidate_bin_counts)
+    if fallback_total == 0 or candidate_total == 0:
+        return 0.0
+
+    denominator = len(fallback_bin_counts) - 1
+    fallback_probabilities = tuple(
+        count / fallback_total for count in fallback_bin_counts
+    )
+    candidate_probabilities = tuple(
+        count / candidate_total for count in candidate_bin_counts
+    )
+    outcome_terms = []
+    for fallback_index, fallback_probability in enumerate(fallback_probabilities):
+        for candidate_index, candidate_probability in enumerate(
+            candidate_probabilities
+        ):
+            probability = fallback_probability * candidate_probability
+            if probability == 0.0:
+                continue
+            difference = (
+                (candidate_index - fallback_index) / denominator - effect_margin
+            )
+            outcome_terms.append((probability, difference))
+
+    maximum_fraction = min(truncation, truncation / (1.0 + effect_margin))
+
+    def derivative(fraction: float) -> float:
+        return sum(
+            probability * difference / (1.0 + fraction * difference)
+            for probability, difference in outcome_terms
+        )
+
+    if derivative(0.0) <= 0.0:
+        return 0.0
+    if derivative(maximum_fraction) >= 0.0:
+        return maximum_fraction
+    lower = 0.0
+    upper = maximum_fraction
+    for _iteration in range(80):
+        midpoint = (lower + upper) / 2.0
+        if derivative(midpoint) > 0.0:
+            lower = midpoint
+        else:
+            upper = midpoint
+    return (lower + upper) / 2.0
+
+
+class NScoreFamilywiseRouter:
+    """N-SCORE task evidence with anytime Bonferroni familywise selection."""
+
+    def __init__(
+        self,
+        task_names: tuple[str, ...],
+        *,
+        familywise_alpha: float = 0.05,
+        effect_margin: float = 0.0,
+        maximum_observations_per_task: int = 200,
+        epsilon: float = ALTT_EPSILON,
+        bins: int = NSCORE_BINS,
+        acquisition_seed: int = 0,
+    ) -> None:
+        if not task_names:
+            raise ValueError("at least one task is required")
+        if len(set(task_names)) != len(task_names):
+            raise ValueError("task names must be unique")
+        if not 0.0 < familywise_alpha < 1.0:
+            raise ValueError("familywise_alpha must lie in (0, 1)")
+        if not -1.0 < effect_margin < 1.0:
+            raise ValueError("effect_margin must lie in (-1, 1)")
+        if maximum_observations_per_task <= 0:
+            raise ValueError("maximum_observations_per_task must be positive")
+        if not 0.0 <= epsilon <= 1.0:
+            raise ValueError("epsilon must lie in [0, 1]")
+        if bins < 2:
+            raise ValueError("bins must be at least two")
+        self.task_names = task_names
+        self.familywise_alpha = familywise_alpha
+        self.effect_margin = effect_margin
+        self.maximum_observations_per_task = maximum_observations_per_task
+        self.epsilon = epsilon
+        self.bins = bins
+        self._rng = random.Random(acquisition_seed)
+        self._observations = {task: 0 for task in task_names}
+        self._fallback_histograms = {task: [0] * bins for task in task_names}
+        self._candidate_histograms = {task: [0] * bins for task in task_names}
+        self._current_log_e = {task: 0.0 for task in task_names}
+        self._maximum_log_e = {task: 0.0 for task in task_names}
+        self._last_betting_fraction = {task: 0.0 for task in task_names}
+        self._accepted: set[str] = set()
+
+    def _validate_score(self, value: float) -> float:
+        numeric = float(value)
+        if not isfinite(numeric):
+            raise ValueError("N-SCORE policy scores must be finite")
+        if not 0.0 <= numeric <= 1.0:
+            raise ValueError("N-SCORE policy score lies outside [0, 1]")
+        return numeric
+
+    def _bin_index(self, score: float) -> int:
+        return min(self.bins - 1, int(score * (self.bins - 1)))
+
+    def update(
+        self,
+        task: str,
+        *,
+        fallback_score: float,
+        candidate_score: float,
+    ) -> CloseComparatorEvidence:
+        if task not in self._observations:
+            raise KeyError(f"unknown task: {task}")
+        if task in self._accepted:
+            raise RuntimeError(f"task {task} has already been accepted")
+        if self._observations[task] >= self.maximum_observations_per_task:
+            raise RuntimeError(f"task {task} has exhausted its observation cap")
+        fallback = self._validate_score(fallback_score)
+        candidate = self._validate_score(candidate_score)
+        fraction = nscore_kde_fraction(
+            tuple(self._fallback_histograms[task]),
+            tuple(self._candidate_histograms[task]),
+            effect_margin=self.effect_margin,
+        )
+        self._last_betting_fraction[task] = fraction
+        difference = candidate - fallback - self.effect_margin
+        self._current_log_e[task] += log1p(fraction * difference)
+        self._maximum_log_e[task] = max(
+            self._maximum_log_e[task], self._current_log_e[task]
+        )
+        self._observations[task] += 1
+        self._fallback_histograms[task][self._bin_index(fallback)] += 1
+        self._candidate_histograms[task][self._bin_index(candidate)] += 1
+        self._accepted.update(
+            altt_bonferroni_rejections(
+                self._maximum_log_e,
+                familywise_alpha=self.familywise_alpha,
+            )
+        )
+        return self.evidence(task)
+
+    def next_task(self) -> str | None:
+        eligible = [
+            task
+            for task in self.task_names
+            if task not in self._accepted
+            and self._observations[task] < self.maximum_observations_per_task
+        ]
+        if not eligible:
+            return None
+        ordered = sorted(eligible)
+        if self._rng.random() < self.epsilon:
+            return ordered[self._rng.randrange(len(ordered))]
+        return min(
+            ordered,
+            key=lambda task: (-self._current_log_e[task], task),
+        )
+
+    def evidence(self, task: str) -> CloseComparatorEvidence:
+        if task not in self._observations:
+            raise KeyError(f"unknown task: {task}")
+        return CloseComparatorEvidence(
+            task=task,
+            observations=self._observations[task],
+            current_log_e=self._current_log_e[task],
+            maximum_log_e=self._maximum_log_e[task],
+            last_betting_fraction=self._last_betting_fraction[task],
+            accepted=task in self._accepted,
+        )
+
+    def accepted_tasks(self) -> tuple[str, ...]:
+        return tuple(task for task in self.task_names if task in self._accepted)
+
+    def total_observations(self) -> int:
+        return sum(self._observations.values())

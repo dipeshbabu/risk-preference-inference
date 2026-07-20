@@ -207,7 +207,11 @@ def _audit_close_comparator_null(payload: dict) -> dict:
         float(mean) != 0.0 for mean in task_means.values()
     ):
         raise RuntimeError("close-comparator global-null task family changed")
-    expected = {"altt_agrapa_bonferroni", "eholm_agrapa"}
+    expected = {
+        "altt_agrapa_bonferroni",
+        "eholm_agrapa",
+        "nscore11_bonferroni",
+    }
     method_summaries = summary.get("method_summaries")
     if not isinstance(method_summaries, dict) or set(method_summaries) != expected:
         raise RuntimeError("close-comparator null method coverage changed")

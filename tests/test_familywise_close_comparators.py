@@ -6,8 +6,11 @@ import pytest
 
 from experiments.familywise_close_comparators import (
     AgrapaFamilywiseRouter,
+    NSCORE_NUMERICAL_TRUNCATION,
+    NScoreFamilywiseRouter,
     altt_bonferroni_rejections,
     e_holm_rejections,
+    nscore_kde_fraction,
 )
 
 
@@ -59,3 +62,36 @@ def test_epsilon_greedy_acquisition_is_seed_deterministic() -> None:
         second.update(second_task, 0.0)
     assert first_sequence == second_sequence
 
+
+def test_nscore_fraction_uses_only_past_histograms() -> None:
+    assert nscore_kde_fraction((0, 0), (0, 0)) == 0.0
+    favorable = nscore_kde_fraction((10, 0), (0, 10))
+    unfavorable = nscore_kde_fraction((0, 10), (10, 0))
+    assert favorable == pytest.approx(NSCORE_NUMERICAL_TRUNCATION)
+    assert unfavorable == 0.0
+
+
+def test_nscore_router_accepts_a_clear_paired_improvement() -> None:
+    router = NScoreFamilywiseRouter(
+        ("positive",),
+        maximum_observations_per_task=100,
+    )
+    first = router.update(
+        "positive",
+        fallback_score=0.0,
+        candidate_score=1.0,
+    )
+    assert first.last_betting_fraction == 0.0
+    while not router.evidence("positive").accepted:
+        router.update(
+            "positive",
+            fallback_score=0.0,
+            candidate_score=1.0,
+        )
+    assert router.total_observations() <= 100
+
+
+def test_nscore_router_rejects_unbounded_policy_scores() -> None:
+    router = NScoreFamilywiseRouter(("task",))
+    with pytest.raises(ValueError, match="outside"):
+        router.update("task", fallback_score=0.0, candidate_score=1.01)

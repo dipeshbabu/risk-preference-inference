@@ -146,6 +146,16 @@ additions help across a heterogeneous, independently maintained nine-domain
 suite under a prospective confirmation split; aLTT used 20 TD3+BC policies in
 one HalfCheetah environment as its policy-selection example.
 
+Two policy-improvement lines further narrow the claim. CSPI-MT already tests
+multiple candidate policies against a baseline and targets expected realized
+improvement, but it is an asymptotic, sample-split procedure for threshold
+policies. N-SCORE already supplies finite-sample anytime-valid paired policy
+comparison for bounded nonbinary metrics and uses Bonferroni in its multi-policy
+experiments. Sequential paired policy comparison is therefore also prior art.
+RiskShiftBench v2 instead targets simultaneous task-indexed deployment under
+outcome-adaptive allocation, a conditional-mean validity model, and a frozen
+family-level resolution-cost certificate.
+
 To make that boundary testable,
 `experiments/familywise_close_comparators.py` implements an aLTT reproduction
 from the published specification, with aGRAPA betting, running-maximum anytime p-values, Bonferroni
@@ -157,20 +167,28 @@ strong FWER control and can strictly dominate inverse-e Bonferroni/Holm
 aggregation; it is a close comparator, not a v2 contribution. The primary v2
 router retains frozen task weights and its deployment-cost certificate because
 the current unweighted e-Holm result does not supply that certificate.
+The same module implements an 11-bin N-SCORE reproduction. It uses the
+paper's outer-marginal histogram and maximizes the resulting empirical expected
+log-growth before each observation. The exact paired difference, rather than
+the histogram approximation, updates the e-process. An anytime-Bonferroni,
+epsilon-greedy familywise lift makes N-SCORE budget-comparable in the synthetic
+task family; this lift is a comparator, not a claim made by the N-SCORE paper.
 
 - [Adaptive Learn-then-Test: Statistically Valid and Efficient Hyperparameter Selection](https://proceedings.mlr.press/v267/zecchin25a.html)
 - [Family-wise Error Rate Control with E-values](https://arxiv.org/abs/2501.09015)
+- [CSPI-MT: Calibrated Safe Policy Improvement with Multiple Testing for Threshold Policies](https://arxiv.org/abs/2408.12004)
+- [Beyond Binary Success: Sample-Efficient and Statistically Rigorous Robot Policy Comparison](https://arxiv.org/abs/2603.13616)
 
 Every synthetic calibration and paired method-comparison artifact is now bound
 to the newline-canonicalized statistical implementation digest
-`111e48efaea4f71031d52ced679b84ec832c03dc0519cc2be0c8d5d459fbe6fb`.
+`d7d078b95fb27d268719c3fccc2e8c314403d91ff25e448c378556366881fa27`.
 The digest covers the router, calibration generator, valid comparison methods,
 paired comparison runner, and the hash definition itself. The readiness audit
 requires current-digest artifacts for at least 10,000 primary global-null
 families, 10,000 predictable-comparator global-null families under both
 allocations, and a 300-trial comparison covering every declared method. Null
 calibration additionally requires 10,000 matched global-null families for the
-aLTT and e-Holm close comparators. Null calibration is considered adequate only
+aLTT, e-Holm, and N-SCORE close comparators. Null calibration is considered adequate only
 when the Wilson 95% upper bound remains
 at or below 0.05. No observed power or utility threshold is used to select a
 winner.
@@ -353,7 +371,9 @@ candidate/fallback pairs.
 11. aLTT with aGRAPA betting, anytime Bonferroni, and epsilon-greedy
     acquisition;
 12. always-valid e-Holm with the same aGRAPA evidence and acquisition; and
-13. a robust test-selection baseline inspired by
+13. N-SCORE with 11-bin expected-log-growth betting, anytime Bonferroni,
+    and epsilon-greedy acquisition; and
+14. a robust test-selection baseline inspired by
    [RPOSST](https://proceedings.mlr.press/v216/morrill23a.html).
 
 The primary comparisons are familywise-valid methods. Candidate-everywhere and
@@ -365,7 +385,7 @@ fixed-sample sign tests with Bonferroni or Holm correction, the alpha-spending
 racing rule, the Hoeffding-mixture router, and the betting-mixture router. The
 sign methods test an independent sign null rather than the conditional-mean
 null and are labeled separately; they are not interchangeable guarantees.
-The comparison now includes 14 statistical routing/testing configurations in
+The comparison now includes 15 statistical routing/testing configurations in
 total because allocation variants are counted separately. A first 100-family
 development smoke comparison found 4/100 global-null families with any false
 acceptance for both aLTT and e-Holm; its Wilson upper bound is too wide for the
@@ -374,6 +394,10 @@ certified v2 router accepted 39.0% of positive tasks versus 20.4% for aLTT at
 the same 1,150-observation budget, with no versus one false-accept family.
 These small diagnostics justify retaining the comparison but are not method
 selection evidence; the registered method cannot be chosen from them.
+The N-SCORE lift separately produced two false-accept families in a 100-family
+global-null smoke run and accepted 4.0% of positive tasks in a 100-family mixed
+run. Its null interval is again too wide for readiness; the result is retained
+only as an implementation diagnostic pending the locked 10,000-family run.
 
 The learned-policy reference protocol is now machine-readable in
 `experiments/frontier_v2_baseline_design.py`. Every learned baseline uses five

@@ -82,6 +82,10 @@ def _close_comparator_payload() -> dict:
         "eholm_agrapa": (
             "bounded conditional-mean task streams; always-valid e-Holm strong FWER"
         ),
+        "nscore11_bonferroni": (
+            "bounded conditional-mean task streams; N-SCORE multiplier; "
+            "anytime Bonferroni FWER"
+        ),
     }.items():
         summaries[method] = {
             "assumption": assumption,
@@ -99,9 +103,9 @@ def _close_comparator_payload() -> dict:
     }
 
 
-def test_close_comparator_null_audit_requires_both_close_methods() -> None:
+def test_close_comparator_null_audit_requires_all_close_methods() -> None:
     audited = _audit_close_comparator_null(_close_comparator_payload())
-    assert len(audited["methods"]) == 2
+    assert len(audited["methods"]) == 3
     assert audited["performance_threshold_used"] is False
 
 
