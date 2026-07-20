@@ -7,6 +7,7 @@ import hashlib
 import json
 from datetime import datetime
 from pathlib import Path
+from urllib.parse import urlparse
 
 from experiments.frontier_v2_baseline_design import (
     COMPETITIVE_BASELINES,
@@ -62,6 +63,22 @@ def byte_sha256(path: Path) -> str:
 
 def _json_bytes(value: dict) -> bytes:
     return (json.dumps(value, indent=2, sort_keys=True) + "\n").encode("utf-8")
+
+
+def _validate_registration_url(provider: str, url: str) -> None:
+    parsed = urlparse(url)
+    if parsed.scheme != "https" or not parsed.netloc:
+        raise ValueError("registration URL must be an absolute HTTPS URL")
+    if provider.strip().casefold() == "osf":
+        normalized_path = parsed.path.rstrip("/").casefold()
+        prefix = "/10.17605/osf.io/"
+        if parsed.netloc.casefold() != "doi.org" or not normalized_path.startswith(
+            prefix
+        ) or len(normalized_path) == len(prefix.rstrip("/")):
+            raise ValueError(
+                "OSF registration URL must be its immutable "
+                "https://doi.org/10.17605/OSF.IO/... DOI"
+            )
 
 
 def _source_manifest(repository_root: Path = Path(".")) -> list[dict[str, str]]:
@@ -295,8 +312,7 @@ def finalize_registration(
         raise FileExistsError(f"refusing to overwrite registered wrapper: {output_path}")
     if not provider.strip():
         raise ValueError("registration provider cannot be blank")
-    if not url.startswith("https://"):
-        raise ValueError("registration URL must use HTTPS")
+    _validate_registration_url(provider, url)
     timestamp = datetime.fromisoformat(registered_at.replace("Z", "+00:00"))
     if timestamp.tzinfo is None:
         raise ValueError("registration timestamp must include a timezone")
@@ -351,8 +367,17 @@ def validate_protocol(
         required = ("provider", "url", "registered_at", "registered_design_sha256")
         if any(not registration.get(key) for key in required):
             raise RuntimeError("v2 registration metadata is incomplete")
-        if not str(registration["url"]).startswith("https://"):
-            raise RuntimeError("v2 registration URL must use HTTPS")
+        try:
+            _validate_registration_url(
+                str(registration["provider"]), str(registration["url"])
+            )
+            registered_at = datetime.fromisoformat(
+                str(registration["registered_at"]).replace("Z", "+00:00")
+            )
+            if registered_at.tzinfo is None:
+                raise ValueError("registration timestamp has no timezone")
+        except ValueError as error:
+            raise RuntimeError("v2 registration metadata is invalid") from error
         if registration["registered_design_sha256"] != wrapper[
             "locked_design_byte_sha256"
         ]:

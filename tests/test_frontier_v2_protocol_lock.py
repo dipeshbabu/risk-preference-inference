@@ -67,8 +67,21 @@ def test_finalize_registration_requires_timezone(tmp_path: Path) -> None:
             _draft(tmp_path),
             tmp_path / "registered.json",
             provider="OSF",
-            url="https://osf.io/example",
+            url="https://doi.org/10.17605/OSF.IO/EXAMPLE",
             registered_at="2026-07-20T01:00:00",
+        )
+
+
+def test_finalize_registration_rejects_mutable_osf_project_url(
+    tmp_path: Path,
+) -> None:
+    with pytest.raises(ValueError, match="immutable"):
+        finalize_registration(
+            _draft(tmp_path),
+            tmp_path / "registered.json",
+            provider="OSF",
+            url="https://osf.io/example/overview",
+            registered_at="2026-07-20T01:00:00Z",
         )
 
 
