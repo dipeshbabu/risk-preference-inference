@@ -1,0 +1,8 @@
+{
+  "amendment_canonical_sha256": "45d01ecf5a4093bc63b50a06e1be4582561643324545f2c34483822bccba1cbd",
+  "amendment_path": "configs/external_confirmation_seed_validation_amendment_v1_1.json",
+  "amendment_sha256": "f2a9a96acd74966e2e7390be69956970a726cb6c84b5b6ba166f9a69217ff995",
+  "execution_guard": "Gate, final, and combine remain blocked until registration metadata is finalized in a separate registered wrapper.",
+  "registration": null,
+  "status": "awaiting_external_amendment_registration"
+}

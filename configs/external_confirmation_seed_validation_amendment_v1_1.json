@@ -1,0 +1,75 @@
+{
+  "amendment_id": "external_confirmation_seed_validation_amendment_v1_1",
+  "status": "registration_ready_no_gate_observed",
+  "created_at_utc": "2026-07-19T03:35:17.3893801Z",
+  "purpose": "Correct a deterministic PointGoal seed-metadata validation mismatch discovered when the registered gate command was first invoked after all pilot checkpoints were complete.",
+  "base_protocol": {
+    "registration_provider": "Open Science Framework (OSF)",
+    "registration_url": "https://doi.org/10.17605/OSF.IO/C576U",
+    "registered_at": "2026-07-15T23:36:07.848189Z",
+    "wrapper_path": "configs/external_confirmation_protocol_v1.registered.json",
+    "wrapper_sha256": "12ce2d2c1e2a295ab24ca5c5107b1803c71c50fcc647cf2c3a377a9aa7a817c8",
+    "locked_design_sha256": "5c102349a41306537cd15cfda3b843db92efd26f40bf3a6d99f1a8000b1da095",
+    "locked_design_canonical_sha256": "17321e553c75f7991b899e22b254fb38949549e1235d7462c3aea726a5e65694",
+    "git_commit": "323325d8e1c8894d781dbf7ec97a944874ddb7fb"
+  },
+  "trigger": {
+    "command": "python -m experiments.external_confirmation_evaluation --protocol configs/external_confirmation_protocol_v1.registered.json lock-gates",
+    "error": "RuntimeError: common-random-number pairing changed for ExternalPointGoal-confirmation-l0-cw0p75-s61000-v0",
+    "gate_decisions_file_created": false
+  },
+  "outcome_blind_diagnosis": {
+    "episode_pairs_checked": 8280,
+    "candidate_fallback_seed_pairs_intact": 8280,
+    "pointgoal_seed_pair_mismatches_under_v1_validator": 2520,
+    "mismatches_equal_frozen_layout_seed_base": 2520,
+    "description": "The PointGoal adapter records the seed actually passed to environment.reset: layout_seed_base + pilot seed base + episode. The v1 gate validator omitted the already frozen layout_seed_base when reconstructing the expected recorded seed. FrozenLake and online-knapsack recorded seeds match the v1 formula because their layout offset is zero."
+  },
+  "pilot_state": {
+    "allocations": [
+      "proposal",
+      "random"
+    ],
+    "checkpoint_files": 54,
+    "episode_rows": 16560,
+    "checkpoint_bytes": 2624361,
+    "artifact_set_sha256": "676afc40e191cd5a34d556f8eb163ee9c70da7159c53828b3d255e22f8681bd7",
+    "artifact_set_definition": "SHA-256 of canonical JSON over the sorted registered mode/domain/batch paths, each file byte size, and each file SHA-256.",
+    "observation_declaration": "No utility, reward, cost, score, batch-advantage, gate-acceptance, or final-evaluation value was printed, written by the gate, or inspected before freezing this amendment. Checks were limited to paths, row counts, hashes, recorded seeds, task parameters, policy roles, and process health."
+  },
+  "amendment": {
+    "scope": "Pilot seed-metadata validation only.",
+    "v1_expected_recorded_seed": "pilot_seed_base + task_index * task_seed_stride + batch_index * batch_seed_stride + episode",
+    "v1_1_expected_recorded_seed": "pilot_seed_base + task_index * task_seed_stride + batch_index * batch_seed_stride + layout_seed_base + episode",
+    "layout_seed_base_source": "The existing frozen confirmation task manifest in the registered design.",
+    "unchanged": [
+      "pilot and final episode outcomes",
+      "task and policy manifests",
+      "candidate and fallback assignments",
+      "pilot and final seed ranges",
+      "common-random-number pairing",
+      "task-score formula",
+      "nine-batch unanimous-positive familywise gate",
+      "familywise alpha and proposal family",
+      "all route definitions",
+      "primary estimand and contrasts",
+      "bootstrap, sign-flip, and sensitivity analyses"
+    ]
+  },
+  "amended_source": {
+    "path": "experiments/external_confirmation_evaluation_v1_1.py",
+    "sha256": "a90a29764b10601766ed6e6ae7e605f0be4d9d2636ac0d9b3880ad91bb47a9ff"
+  },
+  "operational_deviation": {
+    "description": "An attempted eight-process parallel execution of PointGoal proposal batches 1-8 encountered a MuJoCo native-memory allocation error before any of those batch files was written. All processes exited. The same registered batches were rerun unchanged with at most three workers, producing one write-once checkpoint per batch. No failed partial file was retained or used."
+  },
+  "execution_boundary": {
+    "next_step": "Externally register this exact amendment payload and amended evaluator source before opening gate decisions or running final evaluation.",
+    "blocked_until_registration": [
+      "lock-gates",
+      "final",
+      "combine"
+    ]
+  },
+  "reporting_commitment": "Report this amendment and the resource-related rerun in the paper and released execution record regardless of study outcome."
+}
