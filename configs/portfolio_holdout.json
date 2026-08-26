@@ -1,6 +1,0 @@
-{
-  "suite": "portfolio_holdout",
-  "seeds": "0,1,2",
-  "episodes": 100,
-  "out_dir": "artifacts/portfolio_benchmark"
-}

@@ -1,9 +1,0 @@
-{
-  "train_tasks": ["RiskBlackjack-Mean-v0"],
-  "test_tasks": ["RiskBlackjack-RuinConstraint-v0"],
-  "episodes": 3,
-  "seed": 0,
-  "hand_depth": 1,
-  "max_candidates": 2,
-  "out_dir": "artifacts/adaptive_search_smoke"
-}

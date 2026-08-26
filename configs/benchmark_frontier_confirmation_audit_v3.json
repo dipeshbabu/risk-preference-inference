@@ -1,7 +1,0 @@
-{
-  "episodes": 100,
-  "hand_depth": 1,
-  "out_dir": "artifacts/frontier_confirmation_v3_frozen_5seed_100ep_v1",
-  "seed": 0,
-  "suite": "frontier_confirmation_audit_v3"
-}

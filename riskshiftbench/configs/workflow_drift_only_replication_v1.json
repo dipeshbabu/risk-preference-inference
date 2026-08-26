@@ -1,0 +1,49 @@
+{
+  "protocol_id": "riskshiftbench-workflow-drift-only-replication-v1",
+  "study_name": "Targeted Workflow-Memory Drift-Only Replication",
+  "evidential_status": "targeted_replication_designed_after_v1_and_locked_before_replication_outcomes",
+  "selection_disclosure": "The workflow-memory update and kappa=0.22 were selected after inspecting v1. The fresh task outcomes were unavailable at this lock.",
+  "design_locked_before_replication_inference": true,
+  "replication_outcomes_observed_at_lock": false,
+  "model": {
+    "id": "qwen2.5-0.5b-instruct",
+    "repository": "Qwen/Qwen2.5-0.5B-Instruct",
+    "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+    "license": "apache-2.0"
+  },
+  "pair": {
+    "id": "workflow-memory",
+    "family": "workflow",
+    "update": "retrieved_customer_authorization_memory"
+  },
+  "task_count": 2000,
+  "task_seed": 97331,
+  "shift": "shifted",
+  "independent_streams": 20,
+  "stream_size": 100,
+  "stream_partition": "contiguous_manifest_blocks",
+  "frozen_fallback_temperature": 3.0,
+  "frozen_confidence_thresholds": [
+    0.6261018279568837,
+    0.7139384347721736,
+    0.8067095867911367
+  ],
+  "mean_margin": 0.02,
+  "material_loss_threshold": 0.5,
+  "maximum_material_loss_probability": 0.10,
+  "maximum_candidate_high_confidence_failure_probability": 0.22,
+  "maximum_verifier_drift": 0.05,
+  "family_alpha": 0.05,
+  "declared_looks": 1,
+  "bootstrap_draws": 2000,
+  "bootstrap_seed": 97332,
+  "maximum_steps": {"workflow": 3},
+  "stale_memory_probability": {"low": 0.05, "mixed": 0.15, "shifted": 0.30},
+  "option_labels": ["A", "B", "C", "D"],
+  "batch_size": 32,
+  "maximum_prompt_tokens": 640,
+  "torch_dtype": "float16",
+  "device": "cuda",
+  "use_last_token_logits_only": true,
+  "no_replacement_after_outcome_access": true
+}

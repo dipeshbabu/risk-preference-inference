@@ -1,28 +1,52 @@
 __pycache__/
 *.py[cod]
 .venv/
+.model-cache/
+/paper/
+/riskgate/
+
+# Local experiment evidence is distributed separately from the code PR.
+/riskshiftbench/artifacts/**
+!/riskshiftbench/artifacts/verifier_preservation_v1/
+/riskshiftbench/artifacts/verifier_preservation_v1/**
+!/riskshiftbench/artifacts/verifier_preservation_v1/README.md
+!/riskshiftbench/artifacts/verifier_preservation_v1/feasibility.json
+!/riskshiftbench/artifacts/verifier_preservation_v1/development_manifest.json
 *.egg-info/
 .pytest_cache/
+pytest-final-*/
 .mypy_cache/
 .ruff_cache/
 
 # Generated research outputs
 artifacts/*
+!artifacts/README.md
 !artifacts/external_development_v1/
 !artifacts/external_development_v1/**
 !artifacts/external_router_lock_v1/
 !artifacts/external_router_lock_v1/**
+!artifacts/hidden_evaluation_dry_run_v1/
+!artifacts/hidden_evaluation_dry_run_v1/**
 data/raw/
 data/interim/
 data/processed/
 reports/
 plots/
 docs/results.md
-paper/
 paper*.zip
 *.svg
 *.pdf
+!paper/riskshiftbench/main.pdf
+!paper/riskgate/main.pdf
 *.pkl
+
+# LaTeX build products (sources and official style files remain visible)
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.xdv
 
 # Legacy transition artifacts
 optimal_policy_training/dealer_transitions.pkl

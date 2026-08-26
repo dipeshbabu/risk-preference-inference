@@ -1,0 +1,35 @@
+{
+  "protocol_id": "riskshiftbench-controlled-verifier-drift-v1",
+  "evidential_status": "author_run_controlled_mechanism_study_not_externally_registered",
+  "score_bounds": [0.0, 1.0],
+  "mean_margin": 0.025,
+  "material_loss_threshold": 0.25,
+  "maximum_material_loss_probability": 0.10,
+  "maximum_candidate_high_confidence_failure_probability": 0.10,
+  "maximum_verifier_drift": 0.05,
+  "confidence_thresholds": [0.7, 0.8, 0.9],
+  "family_alpha": 0.05,
+  "pilot_pairs_per_task": 240,
+  "pilot_streams": 200,
+  "reference_mode": "known_generator_population",
+  "shared_behavior_uniform_within_candidate_fallback_pair": true,
+  "confidence_values": {"high": 0.95, "low": 0.20},
+  "fallback_failure_high_confidence_probability": 0.02,
+  "pilot_seed_start": 41000,
+  "tasks": [
+    {"id": "repo-stable", "domain": "repository", "regime": "stable_eligible", "fallback_success": 0.30, "candidate_success": 0.82, "candidate_failure_high_confidence_probability": 0.00},
+    {"id": "repo-drift", "domain": "repository", "regime": "drift_only_failure", "fallback_success": 0.30, "candidate_success": 0.78, "candidate_failure_high_confidence_probability": 0.42},
+    {"id": "repo-boundary", "domain": "repository", "regime": "near_drift_boundary", "fallback_success": 0.30, "candidate_success": 0.78, "candidate_failure_high_confidence_probability": 0.28},
+    {"id": "repo-mean-failure", "domain": "repository", "regime": "mean_and_downside_failure", "fallback_success": 0.70, "candidate_success": 0.20, "candidate_failure_high_confidence_probability": 0.00},
+
+    {"id": "database-stable", "domain": "database", "regime": "stable_eligible", "fallback_success": 0.35, "candidate_success": 0.80, "candidate_failure_high_confidence_probability": 0.00},
+    {"id": "database-drift", "domain": "database", "regime": "drift_only_failure", "fallback_success": 0.35, "candidate_success": 0.76, "candidate_failure_high_confidence_probability": 0.40},
+    {"id": "database-boundary", "domain": "database", "regime": "near_drift_boundary", "fallback_success": 0.35, "candidate_success": 0.76, "candidate_failure_high_confidence_probability": 0.25},
+    {"id": "database-mean-failure", "domain": "database", "regime": "mean_and_downside_failure", "fallback_success": 0.72, "candidate_success": 0.22, "candidate_failure_high_confidence_probability": 0.00},
+
+    {"id": "tool-stable", "domain": "tool_planning", "regime": "stable_eligible", "fallback_success": 0.25, "candidate_success": 0.75, "candidate_failure_high_confidence_probability": 0.00},
+    {"id": "tool-drift", "domain": "tool_planning", "regime": "drift_only_failure", "fallback_success": 0.25, "candidate_success": 0.75, "candidate_failure_high_confidence_probability": 0.36},
+    {"id": "tool-boundary", "domain": "tool_planning", "regime": "near_drift_boundary", "fallback_success": 0.25, "candidate_success": 0.75, "candidate_failure_high_confidence_probability": 0.24},
+    {"id": "tool-mean-failure", "domain": "tool_planning", "regime": "mean_and_downside_failure", "fallback_success": 0.68, "candidate_success": 0.18, "candidate_failure_high_confidence_probability": 0.00}
+  ]
+}
