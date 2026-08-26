@@ -1,0 +1,21 @@
+{
+  "config_sha256": "2874b21306a703a177da66af3d608b033b4b1f52d441633749b34f6a4a31ec5d",
+  "evidential_status": "checkpoint and option-interface smoke before study lock; no study task used",
+  "feasibility_sha256": "f080af9c8246d629b84213b854751d02cd812efd931a533803a8200081701422",
+  "models": [
+    {
+      "model_id": "qwen2.5-1.5b-instruct",
+      "option_count": 4,
+      "option_logits_finite": true,
+      "peak_cuda_bytes": 3101534720
+    },
+    {
+      "model_id": "smollm2-1.7b-instruct",
+      "option_count": 4,
+      "option_logits_finite": true,
+      "peak_cuda_bytes": 3444657152
+    }
+  ],
+  "source_sha256": "84a318bc2840036c0143ce0fbce3e99d003f3014d50c0b096c3ba7e8ad32bd1f",
+  "status": "feasibility_only_no_study_tasks"
+}

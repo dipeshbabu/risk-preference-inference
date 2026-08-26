@@ -1,9 +1,0 @@
-{
-  "episodes": 100,
-  "seed": 0,
-  "hand_depth": 1,
-  "suite": "frontier_confirmation_audit_v2",
-  "tasks": null,
-  "policy_set": "strong",
-  "out_dir": "artifacts/benchmark_frontier_confirmation_audit_v2"
-}

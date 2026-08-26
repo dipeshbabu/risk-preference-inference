@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "riskshiftbench_manifest_v1.schema.json",
+  "title": "RiskShiftBench manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocol_id",
+    "development_tasks",
+    "calibration_tasks",
+    "target_pairs",
+    "pilot_budget",
+    "pilot_unit",
+    "final_seed_commitment"
+  ],
+  "properties": {
+    "protocol_id": {"type": "string", "minLength": 1},
+    "development_tasks": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "calibration_tasks": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "target_pairs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["task", "domain", "candidate", "fallback"],
+        "properties": {
+          "task": {"type": "string", "minLength": 1},
+          "domain": {"type": "string", "minLength": 1},
+          "candidate": {"type": "string", "minLength": 1},
+          "fallback": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "pilot_budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["per_task_episodes", "global_episodes"],
+      "properties": {
+        "per_task_episodes": {"type": "integer", "minimum": 1},
+        "global_episodes": {"type": "integer", "minimum": 1}
+      }
+    },
+    "pilot_unit": {"enum": ["episode", "fixed_batch"]},
+    "final_seed_commitment": {"type": "string", "minLength": 1}
+  }
+}

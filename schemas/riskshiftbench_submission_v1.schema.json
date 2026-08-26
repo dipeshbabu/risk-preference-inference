@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "riskshiftbench_submission_v1.schema.json",
+  "title": "RiskShiftBench method submission v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocol_id",
+    "method_id",
+    "proposed_tasks",
+    "selected_policy_by_task",
+    "decision_reason_by_task",
+    "pilot_episodes_by_task",
+    "stopping_time_by_task",
+    "frozen_route_sha256"
+  ],
+  "properties": {
+    "protocol_id": {"type": "string", "minLength": 1},
+    "method_id": {"type": "string", "minLength": 1},
+    "proposed_tasks": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "selected_policy_by_task": {
+      "type": "object",
+      "additionalProperties": {"type": "string", "minLength": 1}
+    },
+    "decision_reason_by_task": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "enum": [
+          "promote",
+          "retain-utility",
+          "retain-downside",
+          "retain-confidence-risk",
+          "retain-verifier-drift",
+          "recalibrate-verifier",
+          "unresolved",
+          "unsupported"
+        ]
+      }
+    },
+    "pilot_episodes_by_task": {
+      "type": "object",
+      "additionalProperties": {"type": "integer", "minimum": 0}
+    },
+    "stopping_time_by_task": {
+      "type": "object",
+      "additionalProperties": {"type": "integer", "minimum": 0}
+    },
+    "frozen_route_sha256": {
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{64}$"
+    }
+  }
+}

@@ -1,7 +1,7 @@
 [project]
 name = "risk-shift-bench"
 version = "0.1.0"
-description = "Locked stress tests and robust fallback selection for risk-sensitive sequential decision making."
+description = "Verifier-drift detection and frozen-route evaluation for agent updates under task shift."
 requires-python = ">=3.10"
 dependencies = []
 
@@ -19,8 +19,9 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-where = ["src"]
+where = ["."]
+include = ["riskshiftbench*"]
 
 [tool.pytest.ini_options]
-pythonpath = [".", "src"]
-testpaths = ["tests"]
+pythonpath = ["."]
+testpaths = ["riskshiftbench/tests"]
