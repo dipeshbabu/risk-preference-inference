@@ -5,7 +5,7 @@ __pycache__/
 /paper/
 /riskgate/
 
-# Local experiment evidence is distributed separately from the code PR.
+# Local experiment evidence is stored separately.
 /riskshiftbench/artifacts/**
 !/riskshiftbench/artifacts/verifier_preservation_v1/
 /riskshiftbench/artifacts/verifier_preservation_v1/**
