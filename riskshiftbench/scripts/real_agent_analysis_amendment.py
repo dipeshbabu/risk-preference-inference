@@ -2,7 +2,7 @@
 
 The locked v1 analysis accidentally classified a material loss when either the
 paired score effect crossed ``-gamma`` or the candidate alone triggered an
-unsafe-action flag.  The protocol and manuscript define material downside only
+unsafe-action flag.  The declared analysis defines material downside only
 as ``Pr(Z < -gamma)``.  This amendment changes that one derived quantity and
 recomputes reference labels and routes from the unchanged raw trajectories.
 """

@@ -1,8 +1,7 @@
 # Operational verifier drift in agent updates
 
 This repository contains the RiskShiftBench implementation for operational
-verifier drift and prospective verifier-preservation studies. Manuscript
-sources and rendered paper files are intentionally excluded from this code PR.
+verifier drift and prospective verifier-preservation studies.
 
 ## Active layout
 
@@ -32,6 +31,5 @@ python -m riskshiftbench.experiments.verifier_preservation_study prepare-develop
 python -m riskshiftbench.experiments.verifier_preservation_study run-development
 ```
 
-Large raw trajectories, local model weights, and manuscript contents are kept
-outside Git. Compact configuration, feasibility, and lock records remain in
-the repository.
+Generated trajectories and local model weights are ignored by default. Compact
+configuration, feasibility, and lock records remain versioned.
