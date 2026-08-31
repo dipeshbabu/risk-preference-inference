@@ -12,6 +12,9 @@ __pycache__/
 !/riskshiftbench/artifacts/verifier_preservation_v1/README.md
 !/riskshiftbench/artifacts/verifier_preservation_v1/feasibility.json
 !/riskshiftbench/artifacts/verifier_preservation_v1/development_manifest.json
+!/riskshiftbench/artifacts/verifier_preservation_v1/development_trajectories.json.gz
+!/riskshiftbench/artifacts/verifier_preservation_v1/development_results.json
+!/riskshiftbench/artifacts/verifier_preservation_v1/target_manifest.json.gz
 *.egg-info/
 .pytest_cache/
 pytest-final-*/
