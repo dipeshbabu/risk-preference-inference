@@ -1,0 +1,2644 @@
+{
+  "config_sha256": "2874b21306a703a177da66af3d608b033b4b1f52d441633749b34f6a4a31ec5d",
+  "executed_actions": 58635,
+  "executed_agent_episodes": 12600,
+  "manifest_sha256": "3e44b65049b8f277ff703a5f50bb21420aa8c4e55a06dae935132be355a3eeab",
+  "phase": "development",
+  "point_metrics": {
+    "qwen2.5-1.5b-instruct::coding::careful-scaffold": {
+      "candidate_high_confidence_failure": 0.0,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5066666666666667,
+          "retained_ratio": 0.9868421052631579
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.3,
+          "retained_ratio": 1.0
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.10333333333333333,
+          "retained_ratio": 0.967741935483871
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": -0.00666666666666671,
+          "operational_drift": -0.01666666666666672,
+          "selective_risk_component": -0.010000000000000009
+        },
+        "0.3": {
+          "coverage_component": 0.0,
+          "operational_drift": -0.010000000000000009,
+          "selective_risk_component": -0.009999999999999997
+        },
+        "0.5": {
+          "coverage_component": -0.003333333333333327,
+          "operational_drift": -0.009999999999999995,
+          "selective_risk_component": -0.006666666666666665
+        }
+      },
+      "material_loss_probability": 0.0,
+      "mean_effect": 0.03333333333333333,
+      "operational_drift": -0.0033333333333333335,
+      "operational_drift_profile": {
+        "0.7677566287751741": -0.23,
+        "0.8463616965758243": -0.05333333333333334,
+        "0.8697380145890476": -0.0033333333333333335
+      },
+      "selective_drift": -0.020000000000000018,
+      "selective_drift_profile": {
+        "0.1": -0.020000000000000018,
+        "0.3": -0.033333333333333326,
+        "0.5": -0.06666666666666665
+      }
+    },
+    "qwen2.5-1.5b-instruct::coding::compressed-planner": {
+      "candidate_high_confidence_failure": 0.013333333333333334,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5066666666666667,
+          "retained_ratio": 0.9868421052631579
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.3,
+          "retained_ratio": 1.0
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.10333333333333333,
+          "retained_ratio": 0.967741935483871
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": -0.00666666666666671,
+          "operational_drift": -0.00666666666666671,
+          "selective_risk_component": 0.0
+        },
+        "0.3": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.0,
+          "selective_risk_component": 0.0
+        },
+        "0.5": {
+          "coverage_component": -0.003333333333333327,
+          "operational_drift": -0.003333333333333327,
+          "selective_risk_component": 0.0
+        }
+      },
+      "material_loss_probability": 0.0,
+      "mean_effect": 0.0,
+      "operational_drift": -0.0033333333333333335,
+      "operational_drift_profile": {
+        "0.7677566287751741": -0.21666666666666667,
+        "0.8463616965758243": -0.05333333333333334,
+        "0.8697380145890476": -0.0033333333333333335
+      },
+      "selective_drift": 0.0,
+      "selective_drift_profile": {
+        "0.1": 0.0,
+        "0.3": 0.0,
+        "0.5": 0.0
+      }
+    },
+    "qwen2.5-1.5b-instruct::coding::confidence-flattening": {
+      "candidate_high_confidence_failure": 0.0033333333333333335,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5066666666666667,
+          "retained_ratio": 0.9868421052631579
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.3,
+          "retained_ratio": 1.0
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.10333333333333333,
+          "retained_ratio": 0.967741935483871
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": -0.00666666666666671,
+          "operational_drift": -0.00666666666666671,
+          "selective_risk_component": 0.0
+        },
+        "0.3": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.0,
+          "selective_risk_component": 0.0
+        },
+        "0.5": {
+          "coverage_component": -0.003333333333333327,
+          "operational_drift": -0.003333333333333327,
+          "selective_risk_component": 0.0
+        }
+      },
+      "material_loss_probability": 0.0,
+      "mean_effect": 0.016666666666666666,
+      "operational_drift": -0.0033333333333333335,
+      "operational_drift_profile": {
+        "0.7677566287751741": -0.22666666666666668,
+        "0.8463616965758243": -0.05333333333333334,
+        "0.8697380145890476": -0.0033333333333333335
+      },
+      "selective_drift": 0.0,
+      "selective_drift_profile": {
+        "0.1": 0.0,
+        "0.3": 0.0,
+        "0.5": 0.0
+      }
+    },
+    "qwen2.5-1.5b-instruct::coding::retrieval-authority": {
+      "candidate_high_confidence_failure": 0.37666666666666665,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5066666666666667,
+          "retained_ratio": 0.9868421052631579
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.3,
+          "retained_ratio": 1.0
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.10333333333333333,
+          "retained_ratio": 0.967741935483871
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": -0.00666666666666671,
+          "operational_drift": -0.00666666666666671,
+          "selective_risk_component": 0.0
+        },
+        "0.3": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.0,
+          "selective_risk_component": 0.0
+        },
+        "0.5": {
+          "coverage_component": -0.003333333333333327,
+          "operational_drift": -0.003333333333333327,
+          "selective_risk_component": 0.0
+        }
+      },
+      "material_loss_probability": 0.0,
+      "mean_effect": 0.0,
+      "operational_drift": 0.14666666666666664,
+      "operational_drift_profile": {
+        "0.7677566287751741": 0.14666666666666664,
+        "0.8463616965758243": 0.03666666666666666,
+        "0.8697380145890476": 0.03666666666666667
+      },
+      "selective_drift": 0.0,
+      "selective_drift_profile": {
+        "0.1": 0.0,
+        "0.3": 0.0,
+        "0.5": 0.0
+      }
+    },
+    "qwen2.5-1.5b-instruct::coding::verification-scaffold": {
+      "candidate_high_confidence_failure": 0.013333333333333334,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5066666666666667,
+          "retained_ratio": 0.9868421052631579
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.3,
+          "retained_ratio": 1.0
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.10333333333333333,
+          "retained_ratio": 0.967741935483871
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": -0.00666666666666671,
+          "operational_drift": -0.040000000000000036,
+          "selective_risk_component": -0.033333333333333326
+        },
+        "0.3": {
+          "coverage_component": 0.0,
+          "operational_drift": -0.02999999999999997,
+          "selective_risk_component": -0.029999999999999992
+        },
+        "0.5": {
+          "coverage_component": -0.003333333333333327,
+          "operational_drift": -0.013333333333333322,
+          "selective_risk_component": -0.009999999999999998
+        }
+      },
+      "material_loss_probability": 0.0,
+      "mean_effect": 0.056666666666666664,
+      "operational_drift": -0.0033333333333333335,
+      "operational_drift_profile": {
+        "0.7677566287751741": -0.21666666666666667,
+        "0.8463616965758243": -0.05333333333333334,
+        "0.8697380145890476": -0.0033333333333333335
+      },
+      "selective_drift": -0.06666666666666665,
+      "selective_drift_profile": {
+        "0.1": -0.06666666666666665,
+        "0.3": -0.09999999999999998,
+        "0.5": -0.09999999999999998
+      }
+    },
+    "qwen2.5-1.5b-instruct::coding::verified-memory": {
+      "candidate_high_confidence_failure": 0.14,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5066666666666667,
+          "retained_ratio": 0.9868421052631579
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.3,
+          "retained_ratio": 1.0
+        },
+        "0.5": {
+          "candidate": 0.11,
+          "fallback": 0.10333333333333333,
+          "retained_ratio": 1.064516129032258
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": -0.00666666666666671,
+          "operational_drift": -0.00666666666666671,
+          "selective_risk_component": 0.0
+        },
+        "0.3": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.0,
+          "selective_risk_component": 0.0
+        },
+        "0.5": {
+          "coverage_component": 0.006666666666666668,
+          "operational_drift": 0.006666666666666668,
+          "selective_risk_component": 0.0
+        }
+      },
+      "material_loss_probability": 0.0,
+      "mean_effect": 0.0,
+      "operational_drift": 0.01,
+      "operational_drift_profile": {
+        "0.7677566287751741": -0.09,
+        "0.8463616965758243": -0.02666666666666667,
+        "0.8697380145890476": 0.01
+      },
+      "selective_drift": 0.0,
+      "selective_drift_profile": {
+        "0.1": 0.0,
+        "0.3": 0.0,
+        "0.5": 0.0
+      }
+    },
+    "qwen2.5-1.5b-instruct::research::careful-scaffold": {
+      "candidate_high_confidence_failure": 0.0,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.51,
+          "fallback": 0.5066666666666667,
+          "retained_ratio": 1.006578947368421
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.31666666666666665,
+          "retained_ratio": 0.9473684210526316
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.1,
+          "retained_ratio": 1.0
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": 0.0005043859649122755,
+          "operational_drift": -0.07666666666666667,
+          "selective_risk_component": -0.07717105263157895
+        },
+        "0.3": {
+          "coverage_component": -0.0,
+          "operational_drift": 0.0,
+          "selective_risk_component": 0.0
+        },
+        "0.5": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.0,
+          "selective_risk_component": 0.0
+        }
+      },
+      "material_loss_probability": 0.006666666666666667,
+      "mean_effect": 0.21,
+      "operational_drift": 0.0,
+      "operational_drift_profile": {
+        "0.7256339994130784": -0.07666666666666666,
+        "0.8365268631428078": 0.0,
+        "0.9033423398693358": 0.0
+      },
+      "selective_drift": 0.0,
+      "selective_drift_profile": {
+        "0.1": -0.1513157894736842,
+        "0.3": 0.0,
+        "0.5": 0.0
+      }
+    },
+    "qwen2.5-1.5b-instruct::research::compressed-planner": {
+      "candidate_high_confidence_failure": 0.16,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5033333333333333,
+          "fallback": 0.5066666666666667,
+          "retained_ratio": 0.9934210526315788
+        },
+        "0.3": {
+          "candidate": 0.30333333333333334,
+          "fallback": 0.31666666666666665,
+          "retained_ratio": 0.9578947368421054
+        },
+        "0.5": {
+          "candidate": 0.10666666666666667,
+          "fallback": 0.1,
+          "retained_ratio": 1.0666666666666667
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": -0.0005043859649122923,
+          "operational_drift": 0.08333333333333333,
+          "selective_risk_component": 0.08383771929824561
+        },
+        "0.3": {
+          "coverage_component": -0.0,
+          "operational_drift": 0.13333333333333333,
+          "selective_risk_component": 0.13333333333333333
+        },
+        "0.5": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.016666666666666666,
+          "selective_risk_component": 0.016666666666666666
+        }
+      },
+      "material_loss_probability": 0.056666666666666664,
+      "mean_effect": -0.03333333333333333,
+      "operational_drift": 0.13333333333333333,
+      "operational_drift_profile": {
+        "0.7256339994130784": 0.08333333333333334,
+        "0.8365268631428078": 0.13333333333333333,
+        "0.9033423398693358": 0.0
+      },
+      "selective_drift": 0.43956043956043955,
+      "selective_drift_profile": {
+        "0.1": 0.16656500522830256,
+        "0.3": 0.43956043956043955,
+        "0.5": 0.15625
+      }
+    },
+    "qwen2.5-1.5b-instruct::research::confidence-flattening": {
+      "candidate_high_confidence_failure": 0.13333333333333333,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5033333333333333,
+          "fallback": 0.5066666666666667,
+          "retained_ratio": 0.9934210526315788
+        },
+        "0.3": {
+          "candidate": 0.32,
+          "fallback": 0.31666666666666665,
+          "retained_ratio": 1.0105263157894737
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.1,
+          "retained_ratio": 1.0
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": -0.0005043859649122923,
+          "operational_drift": 0.05666666666666666,
+          "selective_risk_component": 0.057171052631578956
+        },
+        "0.3": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.09666666666666666,
+          "selective_risk_component": 0.09666666666666666
+        },
+        "0.5": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.0,
+          "selective_risk_component": 0.0
+        }
+      },
+      "material_loss_probability": 0.06333333333333334,
+      "mean_effect": -0.043333333333333335,
+      "operational_drift": 0.05666666666666667,
+      "operational_drift_profile": {
+        "0.7256339994130784": 0.05666666666666667,
+        "0.8365268631428078": 0.0,
+        "0.9033423398693358": 0.0
+      },
+      "selective_drift": 0.3020833333333333,
+      "selective_drift_profile": {
+        "0.1": 0.11358487277797144,
+        "0.3": 0.3020833333333333,
+        "0.5": 0.0
+      }
+    },
+    "qwen2.5-1.5b-instruct::research::retrieval-authority": {
+      "candidate_high_confidence_failure": 0.006666666666666667,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5066666666666667,
+          "retained_ratio": 0.9868421052631579
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.31666666666666665,
+          "retained_ratio": 0.9473684210526316
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.1,
+          "retained_ratio": 1.0
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": -0.001008771929824568,
+          "operational_drift": 0.06666666666666667,
+          "selective_risk_component": 0.06767543859649124
+        },
+        "0.3": {
+          "coverage_component": -0.0,
+          "operational_drift": 0.02666666666666667,
+          "selective_risk_component": 0.02666666666666667
+        },
+        "0.5": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.0,
+          "selective_risk_component": 0.0
+        }
+      },
+      "material_loss_probability": 0.09,
+      "mean_effect": -0.06333333333333334,
+      "operational_drift": 0.0,
+      "operational_drift_profile": {
+        "0.7256339994130784": -0.06999999999999999,
+        "0.8365268631428078": 0.0,
+        "0.9033423398693358": 0.0
+      },
+      "selective_drift": 0.13535087719298247,
+      "selective_drift_profile": {
+        "0.1": 0.13535087719298247,
+        "0.3": 0.08888888888888889,
+        "0.5": 0.0
+      }
+    },
+    "qwen2.5-1.5b-instruct::research::verification-scaffold": {
+      "candidate_high_confidence_failure": 0.0,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5066666666666667,
+          "retained_ratio": 0.9868421052631579
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.31666666666666665,
+          "retained_ratio": 0.9473684210526316
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.1,
+          "retained_ratio": 1.0
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": -0.001008771929824568,
+          "operational_drift": -0.07666666666666667,
+          "selective_risk_component": -0.0756578947368421
+        },
+        "0.3": {
+          "coverage_component": -0.0,
+          "operational_drift": 0.0,
+          "selective_risk_component": 0.0
+        },
+        "0.5": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.0,
+          "selective_risk_component": 0.0
+        }
+      },
+      "material_loss_probability": 0.0033333333333333335,
+      "mean_effect": 0.23333333333333334,
+      "operational_drift": 0.0,
+      "operational_drift_profile": {
+        "0.7256339994130784": -0.07666666666666666,
+        "0.8365268631428078": 0.0,
+        "0.9033423398693358": 0.0
+      },
+      "selective_drift": 0.0,
+      "selective_drift_profile": {
+        "0.1": -0.1513157894736842,
+        "0.3": 0.0,
+        "0.5": 0.0
+      }
+    },
+    "qwen2.5-1.5b-instruct::research::verified-memory": {
+      "candidate_high_confidence_failure": 0.013333333333333334,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5066666666666667,
+          "retained_ratio": 0.9868421052631579
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.31666666666666665,
+          "retained_ratio": 0.9473684210526316
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.1,
+          "retained_ratio": 1.0
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": -0.001008771929824568,
+          "operational_drift": -0.036666666666666674,
+          "selective_risk_component": -0.035657894736842104
+        },
+        "0.3": {
+          "coverage_component": -0.0,
+          "operational_drift": 0.0,
+          "selective_risk_component": 0.0
+        },
+        "0.5": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.0,
+          "selective_risk_component": 0.0
+        }
+      },
+      "material_loss_probability": 0.07,
+      "mean_effect": 0.013333333333333334,
+      "operational_drift": 0.0,
+      "operational_drift_profile": {
+        "0.7256339994130784": -0.06333333333333332,
+        "0.8365268631428078": 0.0,
+        "0.9033423398693358": 0.0
+      },
+      "selective_drift": 0.0,
+      "selective_drift_profile": {
+        "0.1": -0.07131578947368421,
+        "0.3": 0.0,
+        "0.5": 0.0
+      }
+    },
+    "qwen2.5-1.5b-instruct::workflow::careful-scaffold": {
+      "candidate_high_confidence_failure": 0.02666666666666667,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5,
+          "retained_ratio": 1.0
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.3,
+          "retained_ratio": 1.0
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.1,
+          "retained_ratio": 1.0
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": 0.0,
+          "operational_drift": -0.09666666666666668,
+          "selective_risk_component": -0.09666666666666668
+        },
+        "0.3": {
+          "coverage_component": 0.0,
+          "operational_drift": -0.043333333333333335,
+          "selective_risk_component": -0.043333333333333335
+        },
+        "0.5": {
+          "coverage_component": 0.0,
+          "operational_drift": -0.01,
+          "selective_risk_component": -0.010000000000000002
+        }
+      },
+      "material_loss_probability": 0.0,
+      "mean_effect": 0.30333333333333334,
+      "operational_drift": 0.0,
+      "operational_drift_profile": {
+        "0.9213435622221657": -0.009999999999999998,
+        "0.9390472331645111": -0.003333333333333333,
+        "0.963401947639708": 0.0
+      },
+      "selective_drift": -0.1,
+      "selective_drift_profile": {
+        "0.1": -0.19333333333333336,
+        "0.3": -0.14444444444444446,
+        "0.5": -0.1
+      }
+    },
+    "qwen2.5-1.5b-instruct::workflow::compressed-planner": {
+      "candidate_high_confidence_failure": 0.04,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5,
+          "retained_ratio": 1.0
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.3,
+          "retained_ratio": 1.0
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.1,
+          "retained_ratio": 1.0
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": 0.0,
+          "operational_drift": -0.030000000000000013,
+          "selective_risk_component": -0.030000000000000013
+        },
+        "0.3": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.003333333333333327,
+          "selective_risk_component": 0.0033333333333333296
+        },
+        "0.5": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.01,
+          "selective_risk_component": 0.010000000000000002
+        }
+      },
+      "material_loss_probability": 0.0033333333333333335,
+      "mean_effect": 0.10666666666666667,
+      "operational_drift": 0.019999999999999997,
+      "operational_drift_profile": {
+        "0.9213435622221657": 0.003333333333333334,
+        "0.9390472331645111": 0.019999999999999997,
+        "0.963401947639708": 0.0
+      },
+      "selective_drift": 0.1,
+      "selective_drift_profile": {
+        "0.1": -0.060000000000000026,
+        "0.3": 0.0111111111111111,
+        "0.5": 0.1
+      }
+    },
+    "qwen2.5-1.5b-instruct::workflow::confidence-flattening": {
+      "candidate_high_confidence_failure": 0.0,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5,
+          "retained_ratio": 1.0
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.3,
+          "retained_ratio": 1.0
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.1,
+          "retained_ratio": 1.0
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.023333333333333317,
+          "selective_risk_component": 0.023333333333333317
+        },
+        "0.3": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.0,
+          "selective_risk_component": 0.0
+        },
+        "0.5": {
+          "coverage_component": 0.0,
+          "operational_drift": -0.01,
+          "selective_risk_component": -0.010000000000000002
+        }
+      },
+      "material_loss_probability": 0.15,
+      "mean_effect": -0.013333333333333334,
+      "operational_drift": 0.0,
+      "operational_drift_profile": {
+        "0.9213435622221657": -0.03666666666666667,
+        "0.9390472331645111": -0.01,
+        "0.963401947639708": 0.0
+      },
+      "selective_drift": 0.046666666666666634,
+      "selective_drift_profile": {
+        "0.1": 0.046666666666666634,
+        "0.3": 0.0,
+        "0.5": -0.1
+      }
+    },
+    "qwen2.5-1.5b-instruct::workflow::retrieval-authority": {
+      "candidate_high_confidence_failure": 0.006666666666666667,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5,
+          "retained_ratio": 1.0
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.3,
+          "retained_ratio": 1.0
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.1,
+          "retained_ratio": 1.0
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": 0.0,
+          "operational_drift": -0.12000000000000001,
+          "selective_risk_component": -0.12000000000000001
+        },
+        "0.3": {
+          "coverage_component": 0.0,
+          "operational_drift": -0.049999999999999996,
+          "selective_risk_component": -0.05
+        },
+        "0.5": {
+          "coverage_component": 0.0,
+          "operational_drift": -0.013333333333333334,
+          "selective_risk_component": -0.013333333333333334
+        }
+      },
+      "material_loss_probability": 0.013333333333333334,
+      "mean_effect": 0.37,
+      "operational_drift": 0.0,
+      "operational_drift_profile": {
+        "0.9213435622221657": -0.03,
+        "0.9390472331645111": -0.01,
+        "0.963401947639708": 0.0
+      },
+      "selective_drift": -0.13333333333333333,
+      "selective_drift_profile": {
+        "0.1": -0.24000000000000002,
+        "0.3": -0.16666666666666669,
+        "0.5": -0.13333333333333333
+      }
+    },
+    "qwen2.5-1.5b-instruct::workflow::verification-scaffold": {
+      "candidate_high_confidence_failure": 0.006666666666666667,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5,
+          "retained_ratio": 1.0
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.3,
+          "retained_ratio": 1.0
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.1,
+          "retained_ratio": 1.0
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": 0.0,
+          "operational_drift": -0.10333333333333333,
+          "selective_risk_component": -0.10333333333333333
+        },
+        "0.3": {
+          "coverage_component": 0.0,
+          "operational_drift": -0.049999999999999996,
+          "selective_risk_component": -0.05
+        },
+        "0.5": {
+          "coverage_component": 0.0,
+          "operational_drift": -0.013333333333333334,
+          "selective_risk_component": -0.013333333333333334
+        }
+      },
+      "material_loss_probability": 0.07333333333333333,
+      "mean_effect": 0.35,
+      "operational_drift": 0.0,
+      "operational_drift_profile": {
+        "0.9213435622221657": -0.03,
+        "0.9390472331645111": -0.01,
+        "0.963401947639708": 0.0
+      },
+      "selective_drift": -0.13333333333333333,
+      "selective_drift_profile": {
+        "0.1": -0.20666666666666667,
+        "0.3": -0.16666666666666669,
+        "0.5": -0.13333333333333333
+      }
+    },
+    "qwen2.5-1.5b-instruct::workflow::verified-memory": {
+      "candidate_high_confidence_failure": 0.006666666666666667,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5,
+          "retained_ratio": 1.0
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.3,
+          "retained_ratio": 1.0
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.1,
+          "retained_ratio": 1.0
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": 0.0,
+          "operational_drift": -0.11000000000000001,
+          "selective_risk_component": -0.11000000000000001
+        },
+        "0.3": {
+          "coverage_component": 0.0,
+          "operational_drift": -0.049999999999999996,
+          "selective_risk_component": -0.05
+        },
+        "0.5": {
+          "coverage_component": 0.0,
+          "operational_drift": -0.01,
+          "selective_risk_component": -0.010000000000000002
+        }
+      },
+      "material_loss_probability": 0.016666666666666666,
+      "mean_effect": 0.3333333333333333,
+      "operational_drift": 0.0,
+      "operational_drift_profile": {
+        "0.9213435622221657": -0.03,
+        "0.9390472331645111": -0.006666666666666666,
+        "0.963401947639708": 0.0
+      },
+      "selective_drift": -0.1,
+      "selective_drift_profile": {
+        "0.1": -0.22000000000000003,
+        "0.3": -0.16666666666666669,
+        "0.5": -0.1
+      }
+    },
+    "smollm2-1.7b-instruct::coding::careful-scaffold": {
+      "candidate_high_confidence_failure": 0.0,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5,
+          "retained_ratio": 1.0
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.3,
+          "retained_ratio": 1.0
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.1,
+          "retained_ratio": 1.0
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.0,
+          "selective_risk_component": 0.0
+        },
+        "0.3": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.0,
+          "selective_risk_component": 0.0
+        },
+        "0.5": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.0,
+          "selective_risk_component": 0.0
+        }
+      },
+      "material_loss_probability": 0.0,
+      "mean_effect": 0.0033333333333333335,
+      "operational_drift": 0.0,
+      "operational_drift_profile": {
+        "0.48677817677819507": -0.19333333333333333,
+        "0.5165492621986102": -0.06333333333333334,
+        "0.542883741114255": 0.0
+      },
+      "selective_drift": 0.0,
+      "selective_drift_profile": {
+        "0.1": 0.0,
+        "0.3": 0.0,
+        "0.5": 0.0
+      }
+    },
+    "smollm2-1.7b-instruct::coding::compressed-planner": {
+      "candidate_high_confidence_failure": 0.04,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5,
+          "retained_ratio": 1.0
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.3,
+          "retained_ratio": 1.0
+        },
+        "0.5": {
+          "candidate": 0.11,
+          "fallback": 0.1,
+          "retained_ratio": 1.0999999999999999
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.0,
+          "selective_risk_component": 0.0
+        },
+        "0.3": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.0,
+          "selective_risk_component": 0.0
+        },
+        "0.5": {
+          "coverage_component": 0.009999999999999995,
+          "operational_drift": 0.009999999999999995,
+          "selective_risk_component": 0.0
+        }
+      },
+      "material_loss_probability": 0.0,
+      "mean_effect": 0.0,
+      "operational_drift": 0.0,
+      "operational_drift_profile": {
+        "0.48677817677819507": -0.15333333333333332,
+        "0.5165492621986102": -0.06333333333333334,
+        "0.542883741114255": 0.0
+      },
+      "selective_drift": 0.0,
+      "selective_drift_profile": {
+        "0.1": 0.0,
+        "0.3": 0.0,
+        "0.5": 0.0
+      }
+    },
+    "smollm2-1.7b-instruct::coding::confidence-flattening": {
+      "candidate_high_confidence_failure": 0.0,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5,
+          "retained_ratio": 1.0
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.3,
+          "retained_ratio": 1.0
+        },
+        "0.5": {
+          "candidate": 0.11,
+          "fallback": 0.1,
+          "retained_ratio": 1.0999999999999999
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.0,
+          "selective_risk_component": 0.0
+        },
+        "0.3": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.0,
+          "selective_risk_component": 0.0
+        },
+        "0.5": {
+          "coverage_component": 0.009999999999999995,
+          "operational_drift": 0.009999999999999995,
+          "selective_risk_component": 0.0
+        }
+      },
+      "material_loss_probability": 0.0,
+      "mean_effect": 0.01,
+      "operational_drift": 0.0,
+      "operational_drift_profile": {
+        "0.48677817677819507": -0.19333333333333333,
+        "0.5165492621986102": -0.06333333333333334,
+        "0.542883741114255": 0.0
+      },
+      "selective_drift": 0.0,
+      "selective_drift_profile": {
+        "0.1": 0.0,
+        "0.3": 0.0,
+        "0.5": 0.0
+      }
+    },
+    "smollm2-1.7b-instruct::coding::retrieval-authority": {
+      "candidate_high_confidence_failure": 0.16666666666666666,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5,
+          "retained_ratio": 1.0
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.3,
+          "retained_ratio": 1.0
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.1,
+          "retained_ratio": 1.0
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.0,
+          "selective_risk_component": 0.0
+        },
+        "0.3": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.0,
+          "selective_risk_component": 0.0
+        },
+        "0.5": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.0,
+          "selective_risk_component": 0.0
+        }
+      },
+      "material_loss_probability": 0.0,
+      "mean_effect": 0.0,
+      "operational_drift": 0.05,
+      "operational_drift_profile": {
+        "0.48677817677819507": -0.026666666666666672,
+        "0.5165492621986102": 0.043333333333333335,
+        "0.542883741114255": 0.05
+      },
+      "selective_drift": 0.0,
+      "selective_drift_profile": {
+        "0.1": 0.0,
+        "0.3": 0.0,
+        "0.5": 0.0
+      }
+    },
+    "smollm2-1.7b-instruct::coding::verification-scaffold": {
+      "candidate_high_confidence_failure": 0.0,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5,
+          "retained_ratio": 1.0
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.3,
+          "retained_ratio": 1.0
+        },
+        "0.5": {
+          "candidate": 0.10333333333333333,
+          "fallback": 0.1,
+          "retained_ratio": 1.0333333333333332
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.0,
+          "selective_risk_component": 0.0
+        },
+        "0.3": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.0,
+          "selective_risk_component": 0.0
+        },
+        "0.5": {
+          "coverage_component": 0.003333333333333327,
+          "operational_drift": 0.003333333333333327,
+          "selective_risk_component": 0.0
+        }
+      },
+      "material_loss_probability": 0.0,
+      "mean_effect": 0.0,
+      "operational_drift": 0.0,
+      "operational_drift_profile": {
+        "0.48677817677819507": -0.19333333333333333,
+        "0.5165492621986102": -0.06333333333333334,
+        "0.542883741114255": 0.0
+      },
+      "selective_drift": 0.0,
+      "selective_drift_profile": {
+        "0.1": 0.0,
+        "0.3": 0.0,
+        "0.5": 0.0
+      }
+    },
+    "smollm2-1.7b-instruct::coding::verified-memory": {
+      "candidate_high_confidence_failure": 0.09333333333333334,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5,
+          "retained_ratio": 1.0
+        },
+        "0.3": {
+          "candidate": 0.30333333333333334,
+          "fallback": 0.3,
+          "retained_ratio": 1.0111111111111113
+        },
+        "0.5": {
+          "candidate": 0.10333333333333333,
+          "fallback": 0.1,
+          "retained_ratio": 1.0333333333333332
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.0,
+          "selective_risk_component": 0.0
+        },
+        "0.3": {
+          "coverage_component": 0.003333333333333355,
+          "operational_drift": 0.003333333333333355,
+          "selective_risk_component": 0.0
+        },
+        "0.5": {
+          "coverage_component": 0.003333333333333327,
+          "operational_drift": 0.003333333333333327,
+          "selective_risk_component": 0.0
+        }
+      },
+      "material_loss_probability": 0.0,
+      "mean_effect": 0.0,
+      "operational_drift": 0.006666666666666667,
+      "operational_drift_profile": {
+        "0.48677817677819507": -0.09999999999999999,
+        "0.5165492621986102": -0.030000000000000006,
+        "0.542883741114255": 0.006666666666666667
+      },
+      "selective_drift": 0.0,
+      "selective_drift_profile": {
+        "0.1": 0.0,
+        "0.3": 0.0,
+        "0.5": 0.0
+      }
+    },
+    "smollm2-1.7b-instruct::research::careful-scaffold": {
+      "candidate_high_confidence_failure": 0.02666666666666667,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5066666666666667,
+          "retained_ratio": 0.9868421052631579
+        },
+        "0.3": {
+          "candidate": 0.30333333333333334,
+          "fallback": 0.30333333333333334,
+          "retained_ratio": 1.0
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.11,
+          "retained_ratio": 0.9090909090909092
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": -0.0018421052631579068,
+          "operational_drift": -0.11333333333333334,
+          "selective_risk_component": -0.11149122807017545
+        },
+        "0.3": {
+          "coverage_component": 0.0,
+          "operational_drift": -0.06666666666666667,
+          "selective_risk_component": -0.06666666666666667
+        },
+        "0.5": {
+          "coverage_component": -0.002424242424242423,
+          "operational_drift": -0.02666666666666667,
+          "selective_risk_component": -0.024242424242424246
+        }
+      },
+      "material_loss_probability": 0.07,
+      "mean_effect": 0.16333333333333333,
+      "operational_drift": -0.02666666666666667,
+      "operational_drift_profile": {
+        "0.46900587454398385": -0.11333333333333334,
+        "0.577206757091011": -0.07,
+        "0.7282517961976398": -0.02666666666666667
+      },
+      "selective_drift": -0.21978021978021978,
+      "selective_drift_profile": {
+        "0.1": -0.2229824561403509,
+        "0.3": -0.21978021978021978,
+        "0.5": -0.24242424242424243
+      }
+    },
+    "smollm2-1.7b-instruct::research::compressed-planner": {
+      "candidate_high_confidence_failure": 0.13666666666666666,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5033333333333333,
+          "fallback": 0.5066666666666667,
+          "retained_ratio": 0.9934210526315788
+        },
+        "0.3": {
+          "candidate": 0.31666666666666665,
+          "fallback": 0.30333333333333334,
+          "retained_ratio": 1.0439560439560438
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.11,
+          "retained_ratio": 0.9090909090909092
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": -0.0009210526315789687,
+          "operational_drift": 0.023333333333333317,
+          "selective_risk_component": 0.02425438596491226
+        },
+        "0.3": {
+          "coverage_component": 0.0032234432234432174,
+          "operational_drift": 0.01999999999999999,
+          "selective_risk_component": 0.01677655677655677
+        },
+        "0.5": {
+          "coverage_component": -0.002424242424242423,
+          "operational_drift": -0.0066666666666666645,
+          "selective_risk_component": -0.004242424242424242
+        }
+      },
+      "material_loss_probability": 0.16,
+      "mean_effect": -0.02666666666666667,
+      "operational_drift": -0.003333333333333355,
+      "operational_drift_profile": {
+        "0.46900587454398385": -0.003333333333333355,
+        "0.577206757091011": -0.03333333333333333,
+        "0.7282517961976398": -0.02666666666666667
+      },
+      "selective_drift": 0.05297860034702137,
+      "selective_drift_profile": {
+        "0.1": 0.0481875217845939,
+        "0.3": 0.05297860034702137,
+        "0.5": -0.04242424242424242
+      }
+    },
+    "smollm2-1.7b-instruct::research::confidence-flattening": {
+      "candidate_high_confidence_failure": 0.09,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5133333333333333,
+          "fallback": 0.5066666666666667,
+          "retained_ratio": 1.013157894736842
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.30333333333333334,
+          "retained_ratio": 0.9890109890109889
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.11,
+          "retained_ratio": 0.9090909090909092
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": 0.001842105263157876,
+          "operational_drift": 0.02999999999999997,
+          "selective_risk_component": 0.02815789473684209
+        },
+        "0.3": {
+          "coverage_component": -0.0008058608058608111,
+          "operational_drift": 0.016666666666666663,
+          "selective_risk_component": 0.017472527472527467
+        },
+        "0.5": {
+          "coverage_component": -0.002424242424242423,
+          "operational_drift": 0.0,
+          "selective_risk_component": 0.0024242424242424234
+        }
+      },
+      "material_loss_probability": 0.18,
+      "mean_effect": -0.04666666666666667,
+      "operational_drift": -0.02666666666666667,
+      "operational_drift_profile": {
+        "0.46900587454398385": -0.05000000000000002,
+        "0.577206757091011": -0.05,
+        "0.7282517961976398": -0.02666666666666667
+      },
+      "selective_drift": 0.05824175824175823,
+      "selective_drift_profile": {
+        "0.1": 0.05485304169514693,
+        "0.3": 0.05824175824175823,
+        "0.5": 0.024242424242424232
+      }
+    },
+    "smollm2-1.7b-instruct::research::retrieval-authority": {
+      "candidate_high_confidence_failure": 0.03,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5033333333333333,
+          "fallback": 0.5066666666666667,
+          "retained_ratio": 0.9934210526315788
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.30333333333333334,
+          "retained_ratio": 0.9890109890109889
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.11,
+          "retained_ratio": 0.9090909090909092
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": -0.0009210526315789687,
+          "operational_drift": -0.06000000000000001,
+          "selective_risk_component": -0.05907894736842106
+        },
+        "0.3": {
+          "coverage_component": -0.0008058608058608111,
+          "operational_drift": -0.05333333333333333,
+          "selective_risk_component": -0.05252747252747252
+        },
+        "0.5": {
+          "coverage_component": -0.002424242424242423,
+          "operational_drift": -0.023333333333333334,
+          "selective_risk_component": -0.020909090909090912
+        }
+      },
+      "material_loss_probability": 0.13666666666666666,
+      "mean_effect": 0.02666666666666667,
+      "operational_drift": -0.02666666666666667,
+      "operational_drift_profile": {
+        "0.46900587454398385": -0.11000000000000001,
+        "0.577206757091011": -0.06666666666666667,
+        "0.7282517961976398": -0.02666666666666667
+      },
+      "selective_drift": -0.11737539212269085,
+      "selective_drift_profile": {
+        "0.1": -0.11737539212269085,
+        "0.3": -0.17509157509157508,
+        "0.5": -0.2090909090909091
+      }
+    },
+    "smollm2-1.7b-instruct::research::verification-scaffold": {
+      "candidate_high_confidence_failure": 0.02,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5066666666666667,
+          "retained_ratio": 0.9868421052631579
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.30333333333333334,
+          "retained_ratio": 0.9890109890109889
+        },
+        "0.5": {
+          "candidate": 0.10333333333333333,
+          "fallback": 0.11,
+          "retained_ratio": 0.9393939393939393
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": -0.0018421052631579068,
+          "operational_drift": -0.06333333333333335,
+          "selective_risk_component": -0.06149122807017546
+        },
+        "0.3": {
+          "coverage_component": -0.0008058608058608111,
+          "operational_drift": -0.04,
+          "selective_risk_component": -0.039194139194139194
+        },
+        "0.5": {
+          "coverage_component": -0.0016161616161616166,
+          "operational_drift": -0.020000000000000004,
+          "selective_risk_component": -0.018383838383838384
+        }
+      },
+      "material_loss_probability": 0.09,
+      "mean_effect": 0.04,
+      "operational_drift": -0.02666666666666667,
+      "operational_drift_profile": {
+        "0.46900587454398385": -0.12000000000000001,
+        "0.577206757091011": -0.07,
+        "0.7282517961976398": -0.02666666666666667
+      },
+      "selective_drift": -0.12298245614035092,
+      "selective_drift_profile": {
+        "0.1": -0.12298245614035092,
+        "0.3": -0.13064713064713065,
+        "0.5": -0.17790811339198437
+      }
+    },
+    "smollm2-1.7b-instruct::research::verified-memory": {
+      "candidate_high_confidence_failure": 0.023333333333333334,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5066666666666667,
+          "retained_ratio": 0.9868421052631579
+        },
+        "0.3": {
+          "candidate": 0.30333333333333334,
+          "fallback": 0.30333333333333334,
+          "retained_ratio": 1.0
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.11,
+          "retained_ratio": 0.9090909090909092
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": -0.0018421052631579068,
+          "operational_drift": -0.08666666666666667,
+          "selective_risk_component": -0.08482456140350877
+        },
+        "0.3": {
+          "coverage_component": 0.0,
+          "operational_drift": -0.05333333333333333,
+          "selective_risk_component": -0.05333333333333333
+        },
+        "0.5": {
+          "coverage_component": -0.002424242424242423,
+          "operational_drift": -0.02666666666666667,
+          "selective_risk_component": -0.024242424242424246
+        }
+      },
+      "material_loss_probability": 0.16666666666666666,
+      "mean_effect": 0.02666666666666667,
+      "operational_drift": -0.02666666666666667,
+      "operational_drift_profile": {
+        "0.46900587454398385": -0.11666666666666668,
+        "0.577206757091011": -0.07333333333333333,
+        "0.7282517961976398": -0.02666666666666667
+      },
+      "selective_drift": -0.16964912280701755,
+      "selective_drift_profile": {
+        "0.1": -0.16964912280701755,
+        "0.3": -0.1758241758241758,
+        "0.5": -0.24242424242424243
+      }
+    },
+    "smollm2-1.7b-instruct::workflow::careful-scaffold": {
+      "candidate_high_confidence_failure": 0.08666666666666667,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5,
+          "retained_ratio": 1.0
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.3,
+          "retained_ratio": 1.0
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.1,
+          "retained_ratio": 1.0
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.09666666666666668,
+          "selective_risk_component": 0.09666666666666668
+        },
+        "0.3": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.033333333333333326,
+          "selective_risk_component": 0.03333333333333333
+        },
+        "0.5": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.006666666666666668,
+          "selective_risk_component": 0.006666666666666665
+        }
+      },
+      "material_loss_probability": 0.16666666666666666,
+      "mean_effect": -0.04666666666666667,
+      "operational_drift": -0.019999999999999997,
+      "operational_drift_profile": {
+        "0.5573370051839751": -0.020000000000000004,
+        "0.6087846406646764": -0.03666666666666667,
+        "0.6826276717939275": -0.019999999999999997
+      },
+      "selective_drift": 0.19333333333333336,
+      "selective_drift_profile": {
+        "0.1": 0.19333333333333336,
+        "0.3": 0.1111111111111111,
+        "0.5": 0.06666666666666665
+      }
+    },
+    "smollm2-1.7b-instruct::workflow::compressed-planner": {
+      "candidate_high_confidence_failure": 0.11333333333333333,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5,
+          "retained_ratio": 1.0
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.3,
+          "retained_ratio": 1.0
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.1,
+          "retained_ratio": 1.0
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": 0.0,
+          "operational_drift": -0.006666666666666668,
+          "selective_risk_component": -0.006666666666666668
+        },
+        "0.3": {
+          "coverage_component": 0.0,
+          "operational_drift": -0.006666666666666668,
+          "selective_risk_component": -0.006666666666666659
+        },
+        "0.5": {
+          "coverage_component": 0.0,
+          "operational_drift": -0.013333333333333332,
+          "selective_risk_component": -0.013333333333333334
+        }
+      },
+      "material_loss_probability": 0.016666666666666666,
+      "mean_effect": 0.07333333333333333,
+      "operational_drift": 0.006666666666666654,
+      "operational_drift_profile": {
+        "0.5573370051839751": 0.006666666666666654,
+        "0.6087846406646764": -0.003333333333333327,
+        "0.6826276717939275": -0.013333333333333332
+      },
+      "selective_drift": -0.013333333333333336,
+      "selective_drift_profile": {
+        "0.1": -0.013333333333333336,
+        "0.3": -0.0222222222222222,
+        "0.5": -0.13333333333333333
+      }
+    },
+    "smollm2-1.7b-instruct::workflow::confidence-flattening": {
+      "candidate_high_confidence_failure": 0.0,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5,
+          "retained_ratio": 1.0
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.3,
+          "retained_ratio": 1.0
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.1,
+          "retained_ratio": 1.0
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.08666666666666667,
+          "selective_risk_component": 0.08666666666666667
+        },
+        "0.3": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.02333333333333333,
+          "selective_risk_component": 0.023333333333333334
+        },
+        "0.5": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.003333333333333334,
+          "selective_risk_component": 0.0033333333333333327
+        }
+      },
+      "material_loss_probability": 0.19,
+      "mean_effect": -0.10666666666666667,
+      "operational_drift": -0.03,
+      "operational_drift_profile": {
+        "0.5573370051839751": -0.10666666666666667,
+        "0.6087846406646764": -0.07333333333333333,
+        "0.6826276717939275": -0.03
+      },
+      "selective_drift": 0.17333333333333334,
+      "selective_drift_profile": {
+        "0.1": 0.17333333333333334,
+        "0.3": 0.07777777777777778,
+        "0.5": 0.033333333333333326
+      }
+    },
+    "smollm2-1.7b-instruct::workflow::retrieval-authority": {
+      "candidate_high_confidence_failure": 0.016666666666666666,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5,
+          "retained_ratio": 1.0
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.3,
+          "retained_ratio": 1.0
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.1,
+          "retained_ratio": 1.0
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": 0.0,
+          "operational_drift": -0.026666666666666658,
+          "selective_risk_component": -0.026666666666666658
+        },
+        "0.3": {
+          "coverage_component": 0.0,
+          "operational_drift": -0.03666666666666666,
+          "selective_risk_component": -0.03666666666666666
+        },
+        "0.5": {
+          "coverage_component": 0.0,
+          "operational_drift": -0.02333333333333333,
+          "selective_risk_component": -0.023333333333333334
+        }
+      },
+      "material_loss_probability": 0.07666666666666666,
+      "mean_effect": 0.09333333333333334,
+      "operational_drift": -0.03,
+      "operational_drift_profile": {
+        "0.5573370051839751": -0.09000000000000001,
+        "0.6087846406646764": -0.07333333333333333,
+        "0.6826276717939275": -0.03
+      },
+      "selective_drift": -0.053333333333333316,
+      "selective_drift_profile": {
+        "0.1": -0.053333333333333316,
+        "0.3": -0.1222222222222222,
+        "0.5": -0.23333333333333334
+      }
+    },
+    "smollm2-1.7b-instruct::workflow::verification-scaffold": {
+      "candidate_high_confidence_failure": 0.02666666666666667,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5,
+          "retained_ratio": 1.0
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.3,
+          "retained_ratio": 1.0
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.1,
+          "retained_ratio": 1.0
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.1433333333333333,
+          "selective_risk_component": 0.1433333333333333
+        },
+        "0.3": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.053333333333333344,
+          "selective_risk_component": 0.053333333333333344
+        },
+        "0.5": {
+          "coverage_component": 0.0,
+          "operational_drift": 0.013333333333333336,
+          "selective_risk_component": 0.013333333333333336
+        }
+      },
+      "material_loss_probability": 0.30333333333333334,
+      "mean_effect": -0.10666666666666667,
+      "operational_drift": -0.03,
+      "operational_drift_profile": {
+        "0.5573370051839751": -0.08,
+        "0.6087846406646764": -0.07,
+        "0.6826276717939275": -0.03
+      },
+      "selective_drift": 0.2866666666666666,
+      "selective_drift_profile": {
+        "0.1": 0.2866666666666666,
+        "0.3": 0.1777777777777778,
+        "0.5": 0.13333333333333336
+      }
+    },
+    "smollm2-1.7b-instruct::workflow::verified-memory": {
+      "candidate_high_confidence_failure": 0.0,
+      "coverage_profile": {
+        "0.1": {
+          "candidate": 0.5,
+          "fallback": 0.5,
+          "retained_ratio": 1.0
+        },
+        "0.3": {
+          "candidate": 0.3,
+          "fallback": 0.3,
+          "retained_ratio": 1.0
+        },
+        "0.5": {
+          "candidate": 0.1,
+          "fallback": 0.1,
+          "retained_ratio": 1.0
+        }
+      },
+      "decomposition": {
+        "0.1": {
+          "coverage_component": 0.0,
+          "operational_drift": -0.003333333333333327,
+          "selective_risk_component": -0.003333333333333327
+        },
+        "0.3": {
+          "coverage_component": 0.0,
+          "operational_drift": -0.013333333333333336,
+          "selective_risk_component": -0.013333333333333327
+        },
+        "0.5": {
+          "coverage_component": 0.0,
+          "operational_drift": -0.009999999999999995,
+          "selective_risk_component": -0.009999999999999998
+        }
+      },
+      "material_loss_probability": 0.10333333333333333,
+      "mean_effect": 0.09333333333333334,
+      "operational_drift": -0.03,
+      "operational_drift_profile": {
+        "0.5573370051839751": -0.10666666666666667,
+        "0.6087846406646764": -0.07333333333333333,
+        "0.6826276717939275": -0.03
+      },
+      "selective_drift": -0.006666666666666654,
+      "selective_drift_profile": {
+        "0.1": -0.006666666666666654,
+        "0.3": -0.044444444444444425,
+        "0.5": -0.09999999999999998
+      }
+    }
+  },
+  "protocol_id": "riskshiftbench-verifier-preservation-v1",
+  "raw_sha256": "0c568be16462109b6454005fd2f661526ee0d42687dfb07a7bfe59be3a1cc0f7",
+  "result_sha256": "b36f7836a781160319d6308cc2e314358654b173f12c74844b2e5dca387f7994",
+  "selected_primary_pairs_per_update": 2000,
+  "source_sha256": "84a318bc2840036c0143ce0fbce3e99d003f3014d50c0b096c3ba7e8ad32bd1f",
+  "verification": {
+    "qwen2.5-1.5b-instruct::coding::careful-scaffold": {
+      "operational_thresholds": [
+        0.7677566287751741,
+        0.8463616965758243,
+        0.8697380145890476
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.6250497916675662,
+          0.7677566287751741
+        ],
+        "0.3": [
+          0.6573896675281147,
+          0.8463616965758243
+        ],
+        "0.5": [
+          0.7094809137527746,
+          0.8697380145890476
+        ]
+      },
+      "temperature": 3.0
+    },
+    "qwen2.5-1.5b-instruct::coding::compressed-planner": {
+      "operational_thresholds": [
+        0.7677566287751741,
+        0.8463616965758243,
+        0.8697380145890476
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.6717420783595718,
+          0.7677566287751741
+        ],
+        "0.3": [
+          0.7247323372322129,
+          0.8463616965758243
+        ],
+        "0.5": [
+          0.7659015640803408,
+          0.8697380145890476
+        ]
+      },
+      "temperature": 3.0
+    },
+    "qwen2.5-1.5b-instruct::coding::confidence-flattening": {
+      "operational_thresholds": [
+        0.7677566287751741,
+        0.8463616965758243,
+        0.8697380145890476
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.6816033848173353,
+          0.7677566287751741
+        ],
+        "0.3": [
+          0.708687189869328,
+          0.8463616965758243
+        ],
+        "0.5": [
+          0.7640606248985804,
+          0.8697380145890476
+        ]
+      },
+      "temperature": 3.0
+    },
+    "qwen2.5-1.5b-instruct::coding::retrieval-authority": {
+      "operational_thresholds": [
+        0.7677566287751741,
+        0.8463616965758243,
+        0.8697380145890476
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.8716599973852618,
+          0.7677566287751741
+        ],
+        "0.3": [
+          0.8901124367551042,
+          0.8463616965758243
+        ],
+        "0.5": [
+          0.9088477284587517,
+          0.8697380145890476
+        ]
+      },
+      "temperature": 3.0
+    },
+    "qwen2.5-1.5b-instruct::coding::verification-scaffold": {
+      "operational_thresholds": [
+        0.7677566287751741,
+        0.8463616965758243,
+        0.8697380145890476
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.6252649794387778,
+          0.7677566287751741
+        ],
+        "0.3": [
+          0.6818233633601596,
+          0.8463616965758243
+        ],
+        "0.5": [
+          0.7517787608304656,
+          0.8697380145890476
+        ]
+      },
+      "temperature": 3.0
+    },
+    "qwen2.5-1.5b-instruct::coding::verified-memory": {
+      "operational_thresholds": [
+        0.7677566287751741,
+        0.8463616965758243,
+        0.8697380145890476
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.8274475307179108,
+          0.7677566287751741
+        ],
+        "0.3": [
+          0.8520684970444189,
+          0.8463616965758243
+        ],
+        "0.5": [
+          0.885680748145201,
+          0.8697380145890476
+        ]
+      },
+      "temperature": 3.0
+    },
+    "qwen2.5-1.5b-instruct::research::careful-scaffold": {
+      "operational_thresholds": [
+        0.7256339994130784,
+        0.8365268631428078,
+        0.9033423398693358
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.746355822472406,
+          0.7256339994130784
+        ],
+        "0.3": [
+          0.844725045661138,
+          0.8365268631428078
+        ],
+        "0.5": [
+          0.8990091888324708,
+          0.9033423398693358
+        ]
+      },
+      "temperature": 3.0
+    },
+    "qwen2.5-1.5b-instruct::research::compressed-planner": {
+      "operational_thresholds": [
+        0.7256339994130784,
+        0.8365268631428078,
+        0.9033423398693358
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.7597939112767216,
+          0.7256339994130784
+        ],
+        "0.3": [
+          0.8361198141941937,
+          0.8365268631428078
+        ],
+        "0.5": [
+          0.8851632101577626,
+          0.9033423398693358
+        ]
+      },
+      "temperature": 3.0
+    },
+    "qwen2.5-1.5b-instruct::research::confidence-flattening": {
+      "operational_thresholds": [
+        0.7256339994130784,
+        0.8365268631428078,
+        0.9033423398693358
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.7207846136030525,
+          0.7256339994130784
+        ],
+        "0.3": [
+          0.7660078302458059,
+          0.8365268631428078
+        ],
+        "0.5": [
+          0.8397226488033468,
+          0.9033423398693358
+        ]
+      },
+      "temperature": 3.0
+    },
+    "qwen2.5-1.5b-instruct::research::retrieval-authority": {
+      "operational_thresholds": [
+        0.7256339994130784,
+        0.8365268631428078,
+        0.9033423398693358
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.6260281659597287,
+          0.7256339994130784
+        ],
+        "0.3": [
+          0.7106412299132013,
+          0.8365268631428078
+        ],
+        "0.5": [
+          0.8360388904074889,
+          0.9033423398693358
+        ]
+      },
+      "temperature": 3.0
+    },
+    "qwen2.5-1.5b-instruct::research::verification-scaffold": {
+      "operational_thresholds": [
+        0.7256339994130784,
+        0.8365268631428078,
+        0.9033423398693358
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.6064387317015711,
+          0.7256339994130784
+        ],
+        "0.3": [
+          0.6992684360069641,
+          0.8365268631428078
+        ],
+        "0.5": [
+          0.7661673139387879,
+          0.9033423398693358
+        ]
+      },
+      "temperature": 3.0
+    },
+    "qwen2.5-1.5b-instruct::research::verified-memory": {
+      "operational_thresholds": [
+        0.7256339994130784,
+        0.8365268631428078,
+        0.9033423398693358
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.650791175102455,
+          0.7256339994130784
+        ],
+        "0.3": [
+          0.7861124119482119,
+          0.8365268631428078
+        ],
+        "0.5": [
+          0.9104015297573866,
+          0.9033423398693358
+        ]
+      },
+      "temperature": 3.0
+    },
+    "qwen2.5-1.5b-instruct::workflow::careful-scaffold": {
+      "operational_thresholds": [
+        0.9213435622221657,
+        0.9390472331645111,
+        0.963401947639708
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.8944924051253144,
+          0.9213435622221657
+        ],
+        "0.3": [
+          0.9320053809716732,
+          0.9390472331645111
+        ],
+        "0.5": [
+          0.9639402868526376,
+          0.963401947639708
+        ]
+      },
+      "temperature": 3.0
+    },
+    "qwen2.5-1.5b-instruct::workflow::compressed-planner": {
+      "operational_thresholds": [
+        0.9213435622221657,
+        0.9390472331645111,
+        0.963401947639708
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.8725434047565086,
+          0.9213435622221657
+        ],
+        "0.3": [
+          0.9218752585857106,
+          0.9390472331645111
+        ],
+        "0.5": [
+          0.9548025478632088,
+          0.963401947639708
+        ]
+      },
+      "temperature": 3.0
+    },
+    "qwen2.5-1.5b-instruct::workflow::confidence-flattening": {
+      "operational_thresholds": [
+        0.9213435622221657,
+        0.9390472331645111,
+        0.963401947639708
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.841185840159109,
+          0.9213435622221657
+        ],
+        "0.3": [
+          0.8822898435983199,
+          0.9390472331645111
+        ],
+        "0.5": [
+          0.949498421832377,
+          0.963401947639708
+        ]
+      },
+      "temperature": 3.0
+    },
+    "qwen2.5-1.5b-instruct::workflow::retrieval-authority": {
+      "operational_thresholds": [
+        0.9213435622221657,
+        0.9390472331645111,
+        0.963401947639708
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.8586934977673821,
+          0.9213435622221657
+        ],
+        "0.3": [
+          0.9088645185524411,
+          0.9390472331645111
+        ],
+        "0.5": [
+          0.9454101179717466,
+          0.963401947639708
+        ]
+      },
+      "temperature": 3.0
+    },
+    "qwen2.5-1.5b-instruct::workflow::verification-scaffold": {
+      "operational_thresholds": [
+        0.9213435622221657,
+        0.9390472331645111,
+        0.963401947639708
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.886065109868952,
+          0.9213435622221657
+        ],
+        "0.3": [
+          0.9173297337247358,
+          0.9390472331645111
+        ],
+        "0.5": [
+          0.9500121095472469,
+          0.963401947639708
+        ]
+      },
+      "temperature": 3.0
+    },
+    "qwen2.5-1.5b-instruct::workflow::verified-memory": {
+      "operational_thresholds": [
+        0.9213435622221657,
+        0.9390472331645111,
+        0.963401947639708
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.8787830065836493,
+          0.9213435622221657
+        ],
+        "0.3": [
+          0.9363061348271098,
+          0.9390472331645111
+        ],
+        "0.5": [
+          0.9537355626905756,
+          0.963401947639708
+        ]
+      },
+      "temperature": 3.0
+    },
+    "smollm2-1.7b-instruct::coding::careful-scaffold": {
+      "operational_thresholds": [
+        0.48677817677819507,
+        0.5165492621986102,
+        0.542883741114255
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.397305381538089,
+          0.48677817677819507
+        ],
+        "0.3": [
+          0.42291823565658304,
+          0.5165492621986102
+        ],
+        "0.5": [
+          0.4572995226605617,
+          0.542883741114255
+        ]
+      },
+      "temperature": 3.0
+    },
+    "smollm2-1.7b-instruct::coding::compressed-planner": {
+      "operational_thresholds": [
+        0.48677817677819507,
+        0.5165492621986102,
+        0.542883741114255
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.44006147910024546,
+          0.48677817677819507
+        ],
+        "0.3": [
+          0.4722623207946178,
+          0.5165492621986102
+        ],
+        "0.5": [
+          0.5009243023974147,
+          0.542883741114255
+        ]
+      },
+      "temperature": 3.0
+    },
+    "smollm2-1.7b-instruct::coding::confidence-flattening": {
+      "operational_thresholds": [
+        0.48677817677819507,
+        0.5165492621986102,
+        0.542883741114255
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.34422727448333124,
+          0.48677817677819507
+        ],
+        "0.3": [
+          0.3606945708010651,
+          0.5165492621986102
+        ],
+        "0.5": [
+          0.38498401922651765,
+          0.542883741114255
+        ]
+      },
+      "temperature": 3.0
+    },
+    "smollm2-1.7b-instruct::coding::retrieval-authority": {
+      "operational_thresholds": [
+        0.48677817677819507,
+        0.5165492621986102,
+        0.542883741114255
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.533072934721539,
+          0.48677817677819507
+        ],
+        "0.3": [
+          0.5621751374243986,
+          0.5165492621986102
+        ],
+        "0.5": [
+          0.6057357592342967,
+          0.542883741114255
+        ]
+      },
+      "temperature": 3.0
+    },
+    "smollm2-1.7b-instruct::coding::verification-scaffold": {
+      "operational_thresholds": [
+        0.48677817677819507,
+        0.5165492621986102,
+        0.542883741114255
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.3879167303838423,
+          0.48677817677819507
+        ],
+        "0.3": [
+          0.4097616485645433,
+          0.5165492621986102
+        ],
+        "0.5": [
+          0.44734087913101955,
+          0.542883741114255
+        ]
+      },
+      "temperature": 3.0
+    },
+    "smollm2-1.7b-instruct::coding::verified-memory": {
+      "operational_thresholds": [
+        0.48677817677819507,
+        0.5165492621986102,
+        0.542883741114255
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.49333082024274594,
+          0.48677817677819507
+        ],
+        "0.3": [
+          0.5170624564363635,
+          0.5165492621986102
+        ],
+        "0.5": [
+          0.546877495981924,
+          0.542883741114255
+        ]
+      },
+      "temperature": 3.0
+    },
+    "smollm2-1.7b-instruct::research::careful-scaffold": {
+      "operational_thresholds": [
+        0.46900587454398385,
+        0.577206757091011,
+        0.7282517961976398
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.4685403287288707,
+          0.46900587454398385
+        ],
+        "0.3": [
+          0.5421739344956185,
+          0.577206757091011
+        ],
+        "0.5": [
+          0.6520796129644104,
+          0.7282517961976398
+        ]
+      },
+      "temperature": 1.0
+    },
+    "smollm2-1.7b-instruct::research::compressed-planner": {
+      "operational_thresholds": [
+        0.46900587454398385,
+        0.577206757091011,
+        0.7282517961976398
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.4557517188017567,
+          0.46900587454398385
+        ],
+        "0.3": [
+          0.5208460877893201,
+          0.577206757091011
+        ],
+        "0.5": [
+          0.6760551452047565,
+          0.7282517961976398
+        ]
+      },
+      "temperature": 1.0
+    },
+    "smollm2-1.7b-instruct::research::confidence-flattening": {
+      "operational_thresholds": [
+        0.46900587454398385,
+        0.577206757091011,
+        0.7282517961976398
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.40246435126413105,
+          0.46900587454398385
+        ],
+        "0.3": [
+          0.45820638157665255,
+          0.577206757091011
+        ],
+        "0.5": [
+          0.5628749436765446,
+          0.7282517961976398
+        ]
+      },
+      "temperature": 1.0
+    },
+    "smollm2-1.7b-instruct::research::retrieval-authority": {
+      "operational_thresholds": [
+        0.46900587454398385,
+        0.577206757091011,
+        0.7282517961976398
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.42990448257262953,
+          0.46900587454398385
+        ],
+        "0.3": [
+          0.5007916548600758,
+          0.577206757091011
+        ],
+        "0.5": [
+          0.6203144037087668,
+          0.7282517961976398
+        ]
+      },
+      "temperature": 1.0
+    },
+    "smollm2-1.7b-instruct::research::verification-scaffold": {
+      "operational_thresholds": [
+        0.46900587454398385,
+        0.577206757091011,
+        0.7282517961976398
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.3842027648391579,
+          0.46900587454398385
+        ],
+        "0.3": [
+          0.44481400403430876,
+          0.577206757091011
+        ],
+        "0.5": [
+          0.5543872397997679,
+          0.7282517961976398
+        ]
+      },
+      "temperature": 1.0
+    },
+    "smollm2-1.7b-instruct::research::verified-memory": {
+      "operational_thresholds": [
+        0.46900587454398385,
+        0.577206757091011,
+        0.7282517961976398
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.42471430703694285,
+          0.46900587454398385
+        ],
+        "0.3": [
+          0.4783255499089359,
+          0.577206757091011
+        ],
+        "0.5": [
+          0.5769718079782321,
+          0.7282517961976398
+        ]
+      },
+      "temperature": 1.0
+    },
+    "smollm2-1.7b-instruct::workflow::careful-scaffold": {
+      "operational_thresholds": [
+        0.5573370051839751,
+        0.6087846406646764,
+        0.6826276717939275
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.5013868035190729,
+          0.5573370051839751
+        ],
+        "0.3": [
+          0.5469197291591821,
+          0.6087846406646764
+        ],
+        "0.5": [
+          0.6114345462486407,
+          0.6826276717939275
+        ]
+      },
+      "temperature": 2.0
+    },
+    "smollm2-1.7b-instruct::workflow::compressed-planner": {
+      "operational_thresholds": [
+        0.5573370051839751,
+        0.6087846406646764,
+        0.6826276717939275
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.5628692545700134,
+          0.5573370051839751
+        ],
+        "0.3": [
+          0.6092821787116791,
+          0.6087846406646764
+        ],
+        "0.5": [
+          0.6846650758868549,
+          0.6826276717939275
+        ]
+      },
+      "temperature": 2.0
+    },
+    "smollm2-1.7b-instruct::workflow::confidence-flattening": {
+      "operational_thresholds": [
+        0.5573370051839751,
+        0.6087846406646764,
+        0.6826276717939275
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.3650756726311179,
+          0.5573370051839751
+        ],
+        "0.3": [
+          0.3905088978267344,
+          0.6087846406646764
+        ],
+        "0.5": [
+          0.4169611160271582,
+          0.6826276717939275
+        ]
+      },
+      "temperature": 2.0
+    },
+    "smollm2-1.7b-instruct::workflow::retrieval-authority": {
+      "operational_thresholds": [
+        0.5573370051839751,
+        0.6087846406646764,
+        0.6826276717939275
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.4707714707851363,
+          0.5573370051839751
+        ],
+        "0.3": [
+          0.5266967978456019,
+          0.6087846406646764
+        ],
+        "0.5": [
+          0.5813720047091129,
+          0.6826276717939275
+        ]
+      },
+      "temperature": 2.0
+    },
+    "smollm2-1.7b-instruct::workflow::verification-scaffold": {
+      "operational_thresholds": [
+        0.5573370051839751,
+        0.6087846406646764,
+        0.6826276717939275
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.45077035382363057,
+          0.5573370051839751
+        ],
+        "0.3": [
+          0.49083921765761945,
+          0.6087846406646764
+        ],
+        "0.5": [
+          0.5471179047316115,
+          0.6826276717939275
+        ]
+      },
+      "temperature": 2.0
+    },
+    "smollm2-1.7b-instruct::workflow::verified-memory": {
+      "operational_thresholds": [
+        0.5573370051839751,
+        0.6087846406646764,
+        0.6826276717939275
+      ],
+      "selective_thresholds": {
+        "0.1": [
+          0.37214177623837563,
+          0.5573370051839751
+        ],
+        "0.3": [
+          0.39729454445906615,
+          0.6087846406646764
+        ],
+        "0.5": [
+          0.4397289425209369,
+          0.6826276717939275
+        ]
+      },
+      "temperature": 2.0
+    }
+  }
+}
