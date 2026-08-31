@@ -10,6 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
-      - run: uv sync
+      - run: uv sync --frozen
       - run: uv run python -m compileall -q riskshiftbench
+      - run: uvx ruff check --select E9,F63,F7,F82 riskshiftbench
+      - run: uvx --from shellcheck-py shellcheck scripts/bootstrap_verifier_preservation_a100.sh scripts/run_verifier_preservation_a100.sh
       - run: uv run pytest -q
