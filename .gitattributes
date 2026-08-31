@@ -1,5 +1,11 @@
-# These registered artifacts are validated by raw SHA-256, so their LF bytes
-# must survive Windows checkouts even when core.autocrlf is enabled.
-/configs/external_confirmation_locked_design_v1.json text eol=lf
-/configs/external_confirmation_seed_validation_amendment_v1_1.json text eol=lf
-/experiments/external_confirmation_evaluation_v1_1.py text eol=lf
+* text=auto
+
+# Source digests must be identical on Linux and Windows hosts.
+*.py text eol=lf
+*.json text eol=lf
+*.toml text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.sh text eol=lf
+
+*.gz binary
